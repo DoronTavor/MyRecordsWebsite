@@ -1,7 +1,7 @@
 
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = require("config.js").uri;
+const uri = require("../../config").uri;
  const MusicAlbum= require("../Models/AlbumModel");
 //const {Client: Discogs} = require("disconnect");
 const bigInt = require('big-integer');
