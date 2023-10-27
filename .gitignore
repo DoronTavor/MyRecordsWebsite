@@ -23,10 +23,4 @@ npm-debug.log*
 
 /src/config.js
 
-desktop.ini
-src/desktop.ini
-src/components/desktop.ini
-src/components/faqs/desktop.ini
-src/components/features/desktop.ini
-*.ini
 
