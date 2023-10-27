@@ -69,9 +69,12 @@ const Text = tw.div`ml-2 text-sm font-semibold text-gray-800`;
 
 const PrimaryButton = tw(PrimaryButtonBase)`mt-auto sm:text-lg rounded-none w-full rounded sm:rounded-none sm:rounded-br-4xl py-3 sm:py-6`;
 export default (props) => {
-  const[cards,setCards]=useState({});
+  const[cards,setCards] = useState({});
   // useState is used instead of useRef below because we want to re-render when sliderRef becomes available (not null)
   const [sliderRef, setSliderRef] = useState(null);
+
+
+
   const sliderSettings = {
     arrows: false,
     slidesToShow: 3,
@@ -92,11 +95,8 @@ export default (props) => {
     ]
   };
 
-  /* Change this according to your needs */
   useEffect(()=>{
-    fetch(`http://localhost:${port}/api/recommend`, {
-      method: "GET"
-    })
+    fetch(`http://localhost:${port}/api/recommend`)
         .then((response) => {
           if (response.status === 200) {
             return response.json(); // This returns a Promise
@@ -165,9 +165,9 @@ export default (props) => {
               <CardImage imageSrc={card.Image} />
               <TextInfo>
                 <TitleReviewContainer>
-                  <Title>{card.Name}</Title>
+                  <Title>{card.Name.split('=')[0]}</Title>
                   <yearsInfo>
-                    <year>{card.Year}</year>
+                    <year> Year: {card.Year}</year>
                   </yearsInfo>
                 </TitleReviewContainer>
                 <SecondaryInfoContainer>

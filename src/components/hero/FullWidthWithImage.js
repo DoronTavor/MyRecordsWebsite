@@ -35,17 +35,19 @@ const Actions = styled.div`
   }
   .primaryAction {
     ${tw`bg-primary-500 text-gray-100 hover:bg-primary-700`}
+    width: 30%; height: 30%;/* Add this line to set a fixed width for primaryAction */
   }
   .secondaryAction {
     ${tw`mt-4 sm:mt-0 sm:ml-4 bg-gray-300 text-gray-700 hover:bg-gray-400 hover:text-gray-800`}
+    width: 30%; height: 30%; /* Add this line to set a fixed width for secondaryAction */
   }
 `;
 
 export default ({
   navLinks = [
     <NavLinks key={1}>
-      <NavLink href="#">CDs</NavLink>
-      <NavLink href="#">Vinyls</NavLink>
+      <NavLink href="/allCds">CDs</NavLink>
+      <NavLink href="/allVinyls">Vinyls</NavLink>
       <NavLink href="#">AddCD</NavLink>
       <NavLink href="#">AddVinyl</NavLink>
       <NavLink href="#">Login</NavLink>

@@ -5,7 +5,7 @@ function SongCard(props){
     return (
       <div>
           <h1>{props.name}</h1>
-          <h2>{props.duration}</h2>
+          <h2>Duration:{props.duration}</h2>
       </div>
     );
 }

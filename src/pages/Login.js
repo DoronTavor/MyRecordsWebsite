@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
@@ -47,6 +47,9 @@ const SubmitButton = styled.button`
     ${tw`ml-3`}
   }
 `;
+
+const port =3005
+
 const IllustrationContainer = tw.div`sm:rounded-r-lg flex-1 bg-purple-100 text-center hidden lg:flex justify-center`;
 const IllustrationImage = styled.div`
   ${props => `background-image: url("${props.imageSrc}");`}
@@ -74,35 +77,52 @@ export default ({
   forgotPasswordUrl = "#",
   signupUrl = "#",
 
-}) => (
-  <AnimationRevealPage>
+}) => {
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
+  const handleSubmit = (event)=>{
+      event.preventDefault()
+
+    console.log(email,password)
+
+    fetch(`http://localhost:${port}/api/users/login`,{
+      method:'POST',
+      body: JSON.stringify({email,password}),
+      headers:{
+        'Content-Type':'application/json'
+      }
+    })
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json(); // This returns a Promise
+          } else {
+            console.log('Request failed with status ' + response.status);
+            throw new Error('Request failed with status ' + response.status);
+          }
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }
+
+  return <AnimationRevealPage>
     <Container>
       <Content>
         <MainContainer>
           <LogoLink href={logoLinkUrl}>
-            <LogoImage src={logo} />
+            <LogoImage src={logo}/>
           </LogoLink>
           <MainContent>
             <Heading>{headingText}</Heading>
             <FormContainer>
-              <SocialButtonsContainer>
-                {socialButtons.map((socialButton, index) => (
-                  <SocialButton key={index} href={socialButton.url}>
-                    <span className="iconContainer">
-                      <img src={socialButton.iconImageSrc} className="icon" alt=""/>
-                    </span>
-                    <span className="text">{socialButton.text}</span>
-                  </SocialButton>
-                ))}
-              </SocialButtonsContainer>
-              <DividerTextContainer>
-                <DividerText>Or Sign in with your e-mail</DividerText>
-              </DividerTextContainer>
-              <Form>
-                <Input type="email" placeholder="Email" />
-                <Input type="password" placeholder="Password" />
+              <Form onSubmit={handleSubmit}>
+                <Input type="email" placeholder="Email" name={'email'} value={email} onChange={(e)=> setEmail(e.target.value)}/>
+                <Input type="password" placeholder="Password" name={'password'} value={password} onChange={(e)=> setPassword(e.target.value)}/>
                 <SubmitButton type="submit">
-                  <SubmitButtonIcon className="icon" />
+                  <SubmitButtonIcon className="icon"/>
                   <span className="text">{submitButtonText}</span>
                 </SubmitButton>
               </Form>
@@ -121,9 +141,9 @@ export default ({
           </MainContent>
         </MainContainer>
         <IllustrationContainer>
-          <IllustrationImage imageSrc={illustrationImageSrc} />
+          <IllustrationImage imageSrc={illustrationImageSrc}/>
         </IllustrationContainer>
       </Content>
     </Container>
   </AnimationRevealPage>
-);
+};

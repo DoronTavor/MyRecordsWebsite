@@ -80,14 +80,14 @@ const handleClickMoreDetails=(event)=>{
         // For example, you can perform a state update or any other logic you need.
     }
 };
-function AllCds(){
+function AllVinyls(){
     const {id}=useParams();
     const [musicObjects,setMusicObjects] = useState();
 
 
 
     useEffect(()=>{
-        fetch(`http://localhost:${port}/api/cd/all`)
+        fetch(`http://localhost:${port}/api/vinyl/all`)
             .then((response) => {
                 if (response.status === 200) {
                     return response.json(); // This returns a Promise
@@ -106,7 +106,7 @@ function AllCds(){
             });
 
         return ()=>{
-            console.log('AllCds unmount')
+            console.log('AllVinyls unmount')
         }
     },[id]);
 
@@ -117,8 +117,8 @@ function AllCds(){
     }
     let navLinks = [
         <NavLinks key={1}>
-            <NavLink href="#">CDs</NavLink>
-            <NavLink href="#">Vinyls</NavLink>
+            <NavLink href="/allCds">CDs</NavLink>
+            <NavLink href="/allVinyls">Vinyls</NavLink>
             <NavLink href="#">AddCD</NavLink>
             <NavLink href="#">AddVinyl</NavLink>
             <NavLink href="#">Login</NavLink>
@@ -146,7 +146,7 @@ function AllCds(){
                             <td><CardImage  style={{ width: '150px', height: '150px', objectFit: 'cover' }} imageSrc={card.Image} /></td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.Name.split('=')[0]}</h3> </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.Year}</h3> </td>
-                            <td><h3 style={{ textAlign: 'center' }}> {card.Artist}</h3> </td>
+                            <td><h3 style={{ textAlign: 'center' }}> {card.Artist.split('=')[0]}</h3> </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.Format}</h3> </td>
                             <td>
                                 <Link to={`/Details/${card._id}`}>More Details</Link>
@@ -161,4 +161,4 @@ function AllCds(){
         </AnimationRevealPage>
     );
 }
-export default AllCds;
+export default AllVinyls;

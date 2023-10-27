@@ -6,7 +6,11 @@ function MusicAlbum(data){
         Format:data["formats"][0].name,
         Year:data["year"],
         TrackList:data["tracklist"],
-        Image:data["images"][0].resource_url
+        Image:data["images"][0].resource_url,
+        uri:data["uri"],
+        label:data["labels"][0].name,
+        descriptions:data["formats"][0].descriptions,
+        country:data["country"]
     };
 
 }

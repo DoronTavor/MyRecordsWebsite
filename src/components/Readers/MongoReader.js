@@ -1,6 +1,7 @@
 
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const jwt = require('jsonwebtoken')
 const uri = require("../../config").uri;
  const MusicAlbum= require("../Models/AlbumModel");
 //const {Client: Discogs} = require("disconnect");
@@ -8,18 +9,14 @@ const bigInt = require('big-integer');
 const express= require('express');
 const {allCds,allVinyls,asked, recommend}= require('./DiscogsReader');
 const {all} = require("express/lib/application");
-const app= express();
-const cors =require('cors');
-const allowedOrigins = [
-    'http://localhost:3000',  // Add your allowed origins here
-    'http://localhost:3000/asked/:id',     // Add more origins as needed
-];
+const app = express();
+const cors = require('cors');
 
-const corsOptions = {
-    origin: allowedOrigins,
-};
 
-app.use(cors(corsOptions));
+app.use(express.json())
+
+app.use(cors());
+
 const port= 3005;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -111,6 +108,15 @@ app.get('/api/recommend',(req, res)=>{
         //res.send(rets);
     });
 });
+
+app.post('/api/users/login',(req, res)=>{
+    const {email,password}=req.body
+    // validate email and password
+
+    const token = jwt.sign({email},'tavor')
+    console.log(token)
+
+})
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
