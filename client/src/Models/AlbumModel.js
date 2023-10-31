@@ -1,5 +1,5 @@
 function MusicAlbum(data){
-    return{
+    return {
         _id: data["id"],
         Name: data["title"],
         Artist:data["artists"][0].name,

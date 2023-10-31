@@ -1,19 +1,19 @@
 
-
+const path = require('path')
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const jwt = require('jsonwebtoken')
-const uri = require("./src/config").uri;
- const MusicAlbum= require("./src/components/Models/AlbumModel");
-//const {Client: Discogs} = require("disconnect");
-const bigInt = require('big-integer');
-const express= require('express');
-const {allCds,allVinyls,asked, recommend, findAsked}= require('./src/components/Readers/DiscogsReader');
-const {all} = require("express/lib/application");
-const app = express();
+const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const express= require('express');
 
+
+const {allCds,allVinyls,asked, recommend, findAsked}= require('./readers/DiscogsReader');
+
+const app = express();
+
+const uri = "mongodb+srv://tavorsoftwareng:DavidBlu13@clusterrecords.vwadsqf.mongodb.net/?retryWrites=true&w=majority";
 
 app.use(express.json())
+app.use(express.static(path.join(__dirname,'client','build')));
 
 app.use(cors());
 

@@ -15,7 +15,7 @@ import ImageForItem from "../components/Boxes/ImageForItem";
 import useLocalStorageState from 'use-local-storage-state'
 import TrackList from "../components/Boxes/TrackList";
 import Header, { LogoLink, NavLinks, NavLink as NavLinkBase } from "../components/headers/light";
-import MusicAlbum from "../components/Models/AlbumModel";
+import MusicAlbum from "../Models/AlbumModel";
 import HelperFunctions, {returnOnlyHebrew} from "../helpers/HelperFunctions"
 import {Link, useParams} from "react-router-dom";
 import * as url from "url";
