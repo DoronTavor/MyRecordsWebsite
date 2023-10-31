@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname,'client','build')));
 
 app.use(cors());
 
-const port= 3005;
+const port=  process.env.PORT ||3005;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {
