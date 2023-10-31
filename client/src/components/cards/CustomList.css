@@ -1,0 +1,18 @@
+/* CustomList.css */
+.custom-list {
+    list-style: none;
+    padding: 0;
+}
+
+.custom-list-item {
+    position: relative;
+    padding-left: 20px; /* Adjust as needed */
+}
+
+.custom-list-item::before {
+    content: attr(data-custom-marker) ' ';
+    position: absolute;
+    left: 0;
+    font-size: 18px; /* Adjust the size as needed */
+    color: #FF5733; /* Adjust the color as needed */
+}

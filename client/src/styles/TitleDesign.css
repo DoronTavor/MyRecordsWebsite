@@ -1,0 +1,20 @@
+.centeredName{
+    text-align: center;
+    font-size: xx-large;
+}
+.centeredArtist{
+    text-align: center;
+    font-size: x-large;
+}
+.centeredFormat{
+    text-align: center;
+    font-size: large;
+}
+.centeredCountry{
+    text-align: center;
+    font-size: x-large;
+}
+.year{
+    text-align:center ;
+    font-size: xx-large;
+}

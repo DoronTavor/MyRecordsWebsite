@@ -2,12 +2,12 @@
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const jwt = require('jsonwebtoken')
-const uri = require("../../config").uri;
- const MusicAlbum= require("../Models/AlbumModel");
+const uri = require("./src/config").uri;
+ const MusicAlbum= require("./src/components/Models/AlbumModel");
 //const {Client: Discogs} = require("disconnect");
 const bigInt = require('big-integer');
 const express= require('express');
-const {allCds,allVinyls,asked, recommend}= require('./DiscogsReader');
+const {allCds,allVinyls,asked, recommend, findAsked}= require('./src/components/Readers/DiscogsReader');
 const {all} = require("express/lib/application");
 const app = express();
 const cors = require('cors');
@@ -116,7 +116,16 @@ app.post('/api/users/login',(req, res)=>{
     const token = jwt.sign({email},'tavor')
     console.log(token)
 
-})
+});
+
+app.get("/api/getAskedFromUser/:musicObject",(req, res)=>{
+    const object=queryStringToObject(req.params.musicObject);
+    //console.log(object);
+    findAsked(object).then((result)=>{
+        console.log("The res: "+result);
+        res.send(result);
+    });
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
@@ -127,7 +136,16 @@ function merge(arr1,arr2){
     }
     return arr1;
 }
+function queryStringToObject(queryString) {
+    const params = new URLSearchParams(queryString);
+    const obj = {};
 
+    for (const [key, value] of params.entries()) {
+        obj[key] = value;
+    }
+
+    return obj;
+}
 
 // fetch(' https://api.discogs.com/releases/${bigInt(key)}',{
 //     method:"GET",
