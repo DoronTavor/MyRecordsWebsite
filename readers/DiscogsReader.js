@@ -1,6 +1,8 @@
 const MusicAlbum = require("../client/src/Models/AlbumModel");
-
-const { authorizationHeader } = require("config");
+if(process.env.NODE_ENV !== 'production'){
+    require('dotenv').config();
+}
+const { authorizationHeader} = process.env.AUTHORIZATIONHEADER;
 function allCds(keys){
     const fetchPromises = keys.map(key => {
         return fetch(`https://api.discogs.com/releases/${key}`, {
