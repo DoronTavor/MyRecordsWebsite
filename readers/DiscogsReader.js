@@ -1,6 +1,6 @@
 const MusicAlbum = require("../client/src/Models/AlbumModel");
 
-const { authorizationHeader } = require("../config");
+const { authorizationHeader } = require("config");
 function allCds(keys){
     const fetchPromises = keys.map(key => {
         return fetch(`https://api.discogs.com/releases/${key}`, {
