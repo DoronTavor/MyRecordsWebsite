@@ -87,7 +87,7 @@ function AllVinyls(){
 
 
     useEffect(()=>{
-        fetch(`http://localhost:${port}/api/vinyl/all`)
+        fetch(`https://myrecordswebsitebackend.onrender.com/api/vinyl/all`)
             .then((response) => {
                 if (response.status === 200) {
                     return response.json(); // This returns a Promise

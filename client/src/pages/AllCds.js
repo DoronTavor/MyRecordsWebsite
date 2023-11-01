@@ -87,7 +87,7 @@ function AllCds(){
 
 
     useEffect(()=>{
-        fetch(`http://localhost:${port}/api/cd/all`)
+        fetch(`https://myrecordswebsitebackend.onrender.com/api/cd/all`)
             .then((response) => {
                 if (response.status === 200) {
                     return response.json(); // This returns a Promise

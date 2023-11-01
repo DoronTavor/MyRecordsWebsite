@@ -62,7 +62,7 @@ function DetailsForItem(){
 
 
      useEffect(()=>{
-         fetch(`http://localhost:${port}/api/asked/${id}`)
+         fetch(`https://myrecordswebsitebackend.onrender.com/api/asked/${id}`)
              .then((response) => {
                  if (response.status === 200) {
                      return response.json(); // This returns a Promise
