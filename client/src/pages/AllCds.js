@@ -19,6 +19,7 @@ import MusicAlbum from "../Models/AlbumModel";
 import HelperFunctions, {returnOnlyHebrew} from "../helpers/HelperFunctions"
 import {Link, useParams} from "react-router-dom";
 import * as url from "url";
+import {DOMAIN} from "../constants";
 const StyledHeader = styled(Header)`
   ${tw`justify-between`}
   ${LogoLink} {
@@ -87,7 +88,7 @@ function AllCds(){
 
 
     useEffect(()=>{
-        fetch(`https://myrecordswebsitebackend.onrender.com/api/cd/all`)
+        fetch(`${DOMAIN}/api/cd/all`)
             .then((response) => {
                 if (response.status === 200) {
                     return response.json(); // This returns a Promise
@@ -117,11 +118,11 @@ function AllCds(){
     }
     let navLinks = [
         <NavLinks key={1}>
-            <NavLink href="/allCds">CDs</NavLink>
-            <NavLink href="/allVinyls">Vinyls</NavLink>
-            <NavLink href="#">AddCD</NavLink>
-            <NavLink href="#">AddVinyl</NavLink>
-            <NavLink href="#">Login</NavLink>
+            <NavLink to="/allCds">CDs</NavLink>
+            <NavLink to="/allVinyls">Vinyls</NavLink>
+            <NavLink to="#">AddCD</NavLink>
+            <NavLink to="#">AddVinyl</NavLink>
+            <NavLink to="#">Login</NavLink>
         </NavLinks>
     ];
     return (

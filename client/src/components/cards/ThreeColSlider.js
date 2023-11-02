@@ -9,6 +9,7 @@ import {ReactComponent as ChevronRightIcon} from "feather-icons/dist/icons/chevr
 import {Link} from "react-router-dom";
 
 import Header, { LogoLink, NavLinks, NavLink as NavLinkBase } from "../headers/light.js";
+import {DOMAIN} from "../../constants";
 
 const port=3005;
 const Container = tw.div`relative`;
@@ -96,7 +97,7 @@ export default (props) => {
   };
 
   useEffect(()=>{
-    fetch(`https://myrecordswebsitebackend.onrender.com/api/recommend`)
+    fetch(`${DOMAIN}/api/recommend`)
         .then((response) => {
           if (response.status === 200) {
             return response.json(); // This returns a Promise
@@ -198,7 +199,7 @@ export default (props) => {
 //onClick={props.onClickedForCardPage(card)}
  function fetchRecommendations(port) {
   try {
-    const res =  fetch(`http://localhost:${port}/api/recommend`, {
+    const res =  fetch(`${DOMAIN}/api/recommend`, {
       method: "GET"
     });
 

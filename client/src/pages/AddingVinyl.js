@@ -7,6 +7,7 @@ import {SectionHeading} from "../components/misc/Headings";
 import {PrimaryButton as PrimaryButtonBase} from "../components/misc/Buttons";
 import AnimationRevealPage from "../helpers/AnimationRevealPage";
 import Footer from "../components/footers/MiniCenteredFooter";
+import {DOMAIN} from "../constants";
 const StyledHeader = styled(Header)`
   ${tw`justify-between`}
   ${LogoLink} {
@@ -63,7 +64,7 @@ function AddingVinyl(){
         const queryString = Object.keys(musicObjectToAdd)
             .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(musicObjectToAdd[key])}`)
             .join('&');
-        fetch(`http://localhost:${port}/api/getAskedFromUser/${queryString}`)
+        fetch(`${DOMAIN}/api/getAskedFromUser/${queryString}`)
             .then((response) => {
                 if (response.status === 200) {
                     return response.json(); // This returns a Promise
@@ -83,11 +84,11 @@ function AddingVinyl(){
     }
     let navLinks = [
         <NavLinks key={1}>
-            <NavLink href="/allCds">CDs</NavLink>
-            <NavLink href="/allVinyls">Vinyls</NavLink>
-            <NavLink href="#">AddCD</NavLink>
-            <NavLink href="/AddVinyl">AddVinyl</NavLink>
-            <NavLink href="#">Login</NavLink>
+            <NavLink to="/allCds">CDs</NavLink>
+            <NavLink to="/allVinyls">Vinyls</NavLink>
+            <NavLink to="#">AddCD</NavLink>
+            <NavLink to="/AddVinyl">AddVinyl</NavLink>
+            <NavLink to="#">Login</NavLink>
         </NavLinks>
     ];
     return (

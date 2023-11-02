@@ -9,6 +9,8 @@ import ImageForItem from "../components/Boxes/ImageForItem";
 import TrackList from "../components/Boxes/TrackList";
 import Header, { LogoLink, NavLinks, NavLink as NavLinkBase } from "../components/headers/light";
 import {useParams} from "react-router-dom";
+import {DOMAIN} from "../constants";
+
 const StyledHeader = styled(Header)`
   ${tw`justify-between`}
   ${LogoLink} {
@@ -62,7 +64,7 @@ function DetailsForItem(){
 
 
      useEffect(()=>{
-         fetch(`https://myrecordswebsitebackend.onrender.com/api/asked/${id}`)
+         fetch(`${DOMAIN}/api/asked/${id}`)
              .then((response) => {
                  if (response.status === 200) {
                      return response.json(); // This returns a Promise
@@ -92,11 +94,11 @@ function DetailsForItem(){
      }
     let navLinks = [
         <NavLinks key={1}>
-            <NavLink href="/allCds">CDs</NavLink>
-            <NavLink href="/allVinyls">Vinyls</NavLink>
-            <NavLink href="#">AddCD</NavLink>
-            <NavLink href="#">AddVinyl</NavLink>
-            <NavLink href="#">Login</NavLink>
+            <NavLink to="/allCds">CDs</NavLink>
+            <NavLink to="/allVinyls">Vinyls</NavLink>
+            <NavLink to="#">AddCD</NavLink>
+            <NavLink to="#">AddVinyl</NavLink>
+            <NavLink to="#">Login</NavLink>
         </NavLinks>
     ];
     return (
