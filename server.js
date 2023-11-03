@@ -49,9 +49,9 @@ async function run() {
         await client.close();
     }
 }
-// app.get("/",(req,res)=>{
-//     res.render("/");
-// });
+app.get("/",(req,res)=>{
+    res.render("/");
+});
 // app.get("/allCds",(req, res)=>{
 //     res.render("/allCds");
 // });
