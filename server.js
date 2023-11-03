@@ -50,7 +50,7 @@ async function run() {
     }
 }
 app.get("/",(req,res)=>{
-    res.render("/");
+    res.send("/");
 });
 // app.get("/allCds",(req, res)=>{
 //     res.render("/allCds");
