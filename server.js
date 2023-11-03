@@ -49,15 +49,15 @@ async function run() {
         await client.close();
     }
 }
-app.get("/",(req,res)=>{
-    res.render("/");
-});
-app.get("/allCds",(req, res)=>{
-    res.render("/allCds");
-});
-app.get("/allVinyls",(req, res)=>{
-    res.render("/allVinyls");
-});
+// app.get("/",(req,res)=>{
+//     res.render("/");
+// });
+// app.get("/allCds",(req, res)=>{
+//     res.render("/allCds");
+// });
+// app.get("/allVinyls",(req, res)=>{
+//     res.render("/allVinyls");
+// });
 
 app.get('/api/cd/all',(req,res)=>{
     const result= run().then((records)=>{
