@@ -50,7 +50,13 @@ async function run() {
     }
 }
 app.get("/",(req,res)=>{
-    res.send("HI");
+    res.render("/");
+});
+app.get("/allCds",(req, res)=>{
+    res.render("/allCds");
+});
+app.get("/allVinyls",(req, res)=>{
+    res.render("/allVinyls");
 });
 
 app.get('/api/cd/all',(req,res)=>{
