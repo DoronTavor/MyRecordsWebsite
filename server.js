@@ -16,7 +16,9 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname,'client','build')));
 
 app.use(cors());
-
+app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 const port=  process.env.PORT || 3005;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
