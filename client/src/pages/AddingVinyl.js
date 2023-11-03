@@ -60,11 +60,12 @@ function AddingVinyl(){
         setMusicObjectToAdd(updatedObject);
         console.log(musicObjectToAdd);
     }
+    //${DOMAIN}
     function handleButtonClick() {
         const queryString = Object.keys(musicObjectToAdd)
             .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(musicObjectToAdd[key])}`)
             .join('&');
-        fetch(`${DOMAIN}/api/getAskedFromUser/${queryString}`)
+        fetch(`/api/getAskedFromUser/${queryString}`)
             .then((response) => {
                 if (response.status === 200) {
                     return response.json(); // This returns a Promise

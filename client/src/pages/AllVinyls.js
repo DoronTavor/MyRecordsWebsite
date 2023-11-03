@@ -86,9 +86,9 @@ function AllVinyls(){
     const [musicObjects,setMusicObjects] = useState();
 
 
-
+//${DOMAIN}
     useEffect(()=> {
-        fetch(`${DOMAIN}/api/vinyl/all`)
+        fetch(`/api/vinyl/all`)
             .then((response) => {
                 if (response.status === 200) {
                     return response.json(); // This returns a Promise

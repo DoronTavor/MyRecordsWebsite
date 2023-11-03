@@ -95,9 +95,9 @@ export default (props) => {
       },
     ]
   };
-
+  //${DOMAIN}
   useEffect(()=>{
-    fetch(`${DOMAIN}/api/recommend`)
+    fetch(`/api/recommend`)
         .then((response) => {
           if (response.status === 200) {
             return response.json(); // This returns a Promise

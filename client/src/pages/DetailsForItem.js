@@ -62,9 +62,9 @@ function DetailsForItem(){
     const [musicObject,setMusicObject] = useState();
 
 
-
+    //${DOMAIN}
      useEffect(()=>{
-         fetch(`${DOMAIN}/api/asked/${id}`)
+         fetch(`/api/asked/${id}`)
              .then((response) => {
                  if (response.status === 200) {
                      return response.json(); // This returns a Promise
