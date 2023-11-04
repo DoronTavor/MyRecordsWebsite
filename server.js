@@ -50,7 +50,7 @@ async function run() {
     }
 }
 app.get("/",(req,res)=>{
-    res.send("/");
+    res.sendFile(path.join(__dirname,'/client/build','index.html'));
 });
 // app.get("/allCds",(req, res)=>{
 //     res.render("/allCds");
