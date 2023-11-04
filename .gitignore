@@ -17,7 +17,8 @@
 .env
 npm-debug.log*
 
+.desktop.ini
 config
 
-**/desktop.ini
+readers/desktop.ini1
 \.git\refs\heads
