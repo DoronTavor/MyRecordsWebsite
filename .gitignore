@@ -17,7 +17,7 @@
 .env
 npm-debug.log*
 
-desktop.ini
+/.desktop.ini
 config
 
 readers/desktop.ini1
