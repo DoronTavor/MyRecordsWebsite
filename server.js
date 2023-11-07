@@ -13,7 +13,7 @@ const app = express();
 const uri = "mongodb+srv://tavorsoftwareng:DavidBlu13@clusterrecords.vwadsqf.mongodb.net/?retryWrites=true&w=majority";
 
 app.use(express.json())
-app.use("/build",express.static(path.join(__dirname,'client','build')));
+app.use("client/build",express.static(path.join(__dirname,'client','build')));
 
 app.use(cors());
 
