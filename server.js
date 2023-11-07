@@ -4,6 +4,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const express= require('express');
+const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const myApp=require("./client/src/App");
 
