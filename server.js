@@ -4,7 +4,8 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const express= require('express');
-
+const ReactDOMServer = require('react-dom/server');
+const myApp=require("./client/src/App");
 
 const {allCds,allVinyls,asked, recommend, findAsked}= require('./readers/DiscogsReader');
 
@@ -49,14 +50,24 @@ async function run() {
         await client.close();
     }
 }
-app.get("/",(req,res)=>{
-    res.sendFile(path.join(__dirname, './client/build', 'index.html'));
+app.get('/', (req, res) => {
+    // Render your React component to HTML
+    const html = ReactDOMServer.renderToString(React.createElement(myApp));
 
+    // Send the HTML response
+    res.send(`
+    <!doctype html>
+    <html>
+      <head>
+        <title>Your React App</title>
+      </head>
+      <body>
+        <div id="root">${html}</div>
+      </body>
+    </html>
+  `);
 });
-app.use("/build", (req, res, next) => {
-    res.type('application/javascript');
-    next();
-}, express.static(path.join(__dirname, 'client', 'build')));
+
 // app.get("/allCds",(req, res)=>{
 //     res.render("/allCds");
 // });
