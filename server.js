@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const express= require('express');
 const React = require('react');
-const ReactDOMServer = require('react-dom/server');
-const myApp=require("./client/src/App");
+// const ReactDOMServer = require('react-dom/server');
+// const myApp=require("./client/src/App");
 
 const {allCds,allVinyls,asked, recommend, findAsked}= require('./readers/DiscogsReader');
 
@@ -51,23 +51,23 @@ async function run() {
         await client.close();
     }
 }
-app.get('/', (req, res) => {
-    // Render your React component to HTML
-    const html = ReactDOMServer.renderToString(React.createElement(myApp));
-
-    // Send the HTML response
-    res.send(`
-    <!doctype html>
-    <html>
-      <head>
-        <title>Your React App</title>
-      </head>
-      <body>
-        <div id="root">${html}</div>
-      </body>
-    </html>
-  `);
-});
+// app.get('/', (req, res) => {
+//     // Render your React component to HTML
+//     const html = ReactDOMServer.renderToString(React.createElement(myApp));
+//
+//     // Send the HTML response
+//     res.send(`
+//     <!doctype html>
+//     <html>
+//       <head>
+//         <title>Your React App</title>
+//       </head>
+//       <body>
+//         <div id="root">${html}</div>
+//       </body>
+//     </html>
+//   `);
+// });
 
 // app.get("/allCds",(req, res)=>{
 //     res.render("/allCds");
@@ -75,7 +75,9 @@ app.get('/', (req, res) => {
 // app.get("/allVinyls",(req, res)=>{
 //     res.render("/allVinyls");
 // });
-
+app.get("/",(req, res)=>{
+    res.render("/");
+});
 app.get('/api/cd/all',(req,res)=>{
     const result= run().then((records)=>{
         const music=records;
