@@ -53,6 +53,10 @@ app.get("/",(req,res)=>{
     res.sendFile(path.join(__dirname, './client/build', 'index.html'));
 
 });
+app.use("/build", (req, res, next) => {
+    res.type('application/javascript');
+    next();
+}, express.static(path.join(__dirname, 'client', 'build')));
 // app.get("/allCds",(req, res)=>{
 //     res.render("/allCds");
 // });
