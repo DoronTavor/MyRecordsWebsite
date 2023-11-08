@@ -12,8 +12,10 @@ const app = express();
 
 const uri = "mongodb+srv://tavorsoftwareng:DavidBlu13@clusterrecords.vwadsqf.mongodb.net/?retryWrites=true&w=majority";
 
-app.use(express.json())
-app.use("client/build",express.static(path.join(__dirname,'client','build')));
+app.use(express.json());
+
+const buildFolderPath = path.join(__dirname,'client','build');
+app.use(express.static(buildFolderPath));
 
 app.use(cors());
 
@@ -49,17 +51,6 @@ async function run() {
         await client.close();
     }
 }
-app.get("/",(req,res)=>{
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-
-});
-
-// app.get("/allCds",(req, res)=>{
-//     res.render("/allCds");
-// });
-// app.get("/allVinyls",(req, res)=>{
-//     res.render("/allVinyls");
-// });
 
 app.get('/api/cd/all',(req,res)=>{
     const result= run().then((records)=>{
@@ -157,15 +148,3 @@ function queryStringToObject(queryString) {
 
     return obj;
 }
-
-// fetch(' https://api.discogs.com/releases/${bigInt(key)}',{
-//     method:"GET",
-//     headers:{
-//         token:"gfEAjkxaciUXSQumtUKdNrwGOqHCdTMgRQrYwLL"
-//     }
-//
-// }).then((res)=>{
-//     let data= res.json();
-//     var album= MusicAlbum(data);
-//     res.send(album);
-// });
