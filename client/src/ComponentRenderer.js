@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import AnimationRevealPage from "helpers/AnimationRevealPage.js"
 
 import EventLandingPage from "demos/EventLandingPage.js";
-import HotelTravelLandingPage from "demos/HotelTravelLandingPage.js";
+import {App} from "demos/App.js";
 import AgencyLandingPage from "demos/AgencyLandingPage.js";
 import SaaSProductLandingPage from "demos/SaaSProductLandingPage.js";
 import RestaurantLandingPage from "demos/RestaurantLandingPage.js";
@@ -108,7 +108,7 @@ export const components = {
       url: "/components/landingPages/RestaurantLandingPage",
     },
     HotelTravelLandingPage: {
-      component: HotelTravelLandingPage,
+      component: App,
       imageSrc: HotelTravelLandingPageImageSrc,
       url: "/components/landingPages/HotelTravelLandingPage",
     },
