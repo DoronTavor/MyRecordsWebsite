@@ -2,13 +2,13 @@ const MusicAlbum = require("../client/src/Models/AlbumModel");
 if(process.env.NODE_ENV !== 'production'){
     require('dotenv').config();
 }
-const { authorizationHeader} = process.env.AUTHORIZATIONHEADER;
+const { AUTHORIZATIONHEADER} = process.env.AUTHORIZATIONHEADER;
 function allCds(keys){
     const fetchPromises = keys.map(key => {
         return fetch(`https://api.discogs.com/releases/${key}`, {
             method: "GET",
             headers: {
-                'Authorization': authorizationHeader,
+                'Authorization':  process.env.AUTHORIZATIONHEADER,
             }
         })
             .then((res) => res.json())
@@ -34,7 +34,7 @@ function allVinyls(keys){
         return fetch(`https://api.discogs.com/releases/${key}`, {
             method: "GET",
             headers: {
-                'Authorization': authorizationHeader,
+                'Authorization':  process.env.AUTHORIZATIONHEADER,
             }
         })
             .then((res) => res.json())
@@ -59,7 +59,7 @@ function asked(key){
     return fetch(`https://api.discogs.com/releases/${key}`, {
         method: 'GET',
         headers: {
-            'Authorization': authorizationHeader,
+            'Authorization': process.env.AUTHORIZATIONHEADER,
         }
     })
         .then((res) => {
@@ -81,7 +81,7 @@ function findAsked(object){
     &country=${object.country}&year=${object.year}&format=${object.format}&per_page=${3}&pages=${1}`, {
         method: 'GET',
         headers: {
-            'Authorization': authorizationHeader,
+            'Authorization':  process.env.AUTHORIZATIONHEADER,
         }
     })
         .then((res) => {
@@ -117,7 +117,7 @@ function recommend(keys){
         return fetch(`https://api.discogs.com/releases/${key}`, {
             method: "GET",
             headers: {
-                'Authorization': authorizationHeader,
+                'Authorization':  process.env.AUTHORIZATIONHEADER,
             }
         })
             .then((res) => res.json())
