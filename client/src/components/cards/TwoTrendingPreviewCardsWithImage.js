@@ -76,7 +76,7 @@ export default () => {
         <ThreeColumn>
           <HeadingColumn>
             <HeadingInfoContainer>
-              <HeadingTitle>Types of records</HeadingTitle>
+              <HeadingTitle>Tavor's collection</HeadingTitle>
 
 
             </HeadingInfoContainer>

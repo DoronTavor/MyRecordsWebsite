@@ -9,12 +9,19 @@ function MusicAlbum(data){
         Image:data["images"][0].resource_url,
         uri:data["uri"],
         label:data["labels"][0].name,
-        descriptions:data["formats"][0].descriptions,
-        country:data["country"]
+        country:data["country"],
+        type:setType(data["formats"][0].descriptions),
+        genres:data["genres"][0]
     };
 
 }
+function setType(array){
+    if(array.length>=2){
+        return array[(array.length-2)]+" "+array[(array.length-1)];
+    }
+    return array[(array.length)-1];
 
+}
 module.exports = MusicAlbum; // Export the class
 
 

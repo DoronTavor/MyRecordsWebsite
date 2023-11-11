@@ -31,7 +31,7 @@ const PrimaryButton = tw(PrimaryButtonBase)`
   mt-auto 
   sm:text-lg
   rounded-none
-  w-32 h-16 // Adjust the width and height for a square button
+  w-32 h-32 // Adjust the width and height for a square button
   
   py-2 px-4  // Adjust the padding to make it smaller
 `;const port =3005;
@@ -108,9 +108,10 @@ function DetailsForItem(){
 
             <ImageForItem image={musicObject.Image}></ImageForItem>
             <Title name={musicObject.Name.split('=')[0]} artist={musicObject.Artist}
-                   year={musicObject.Year} format={musicObject.Format} label={musicObject.label} country={musicObject.country}/>
+                   year={musicObject.Year} format={musicObject.Format} label={musicObject.label} country={musicObject.country} type={musicObject.type}
+                   genres={musicObject.genres}/>
             <TrackList TrackList={musicObject.TrackList}></TrackList>
-            <PrimaryButton data-link={musicObject.uri} onClick={handleClickMoreDetails}>  More Details</PrimaryButton>
+            <PrimaryButton data-link={musicObject.uri} onClick={handleClickMoreDetails}>  Explore more on Discogs</PrimaryButton>
 
             <Footer />
         </AnimationRevealPage>

@@ -130,6 +130,7 @@ function AllCds(){
             <StyledHeader links={navLinks} collapseBreakpointClass="sm" />
         <Container>
             <Content>
+                <Heading>Discography</Heading>
                 <table>
                     <thead>
                     <tr>
@@ -138,7 +139,8 @@ function AllCds(){
                         <th>Year</th>
                         <th>Artist</th>
                         <th>Format</th>
-
+                        <th>Type</th>
+                        <th>Genres</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -149,6 +151,8 @@ function AllCds(){
                             <td><h3 style={{ textAlign: 'center' }}> {card.Year}</h3> </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.Artist}</h3> </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.Format}</h3> </td>
+                            <td><h3 style={{ textAlign: 'center' }}> {card.type}</h3> </td>
+                            <td><h3 style={{ textAlign: 'center' }}> {card.genres}</h3> </td>
                             <td>
                                 <Link to={`/Details/${card._id}`}>More Details</Link>
                             </td>

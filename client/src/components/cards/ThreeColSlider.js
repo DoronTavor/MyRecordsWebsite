@@ -183,7 +183,16 @@ export default (props) => {
                     <Text>{card.Format}</Text>
                   </IconWithText>
                 </SecondaryInfoContainer>
-                <Description>{card.description}</Description>
+                <IconWithText>
+                  <IconContainer>
+                  </IconContainer>
+                  <Text>{card.type}</Text>
+                </IconWithText>
+                <IconWithText>
+                  <IconContainer>
+                  </IconContainer>
+                  <Text>{card.genres}</Text>
+                </IconWithText>
               </TextInfo>
               <Link to= {`/Details/${card._id}`} >
                 <Text>More Details</Text>
