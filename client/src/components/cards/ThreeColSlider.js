@@ -166,16 +166,14 @@ export default (props) => {
               <CardImage imageSrc={card.Image} />
               <TextInfo>
                 <TitleReviewContainer>
-                  <Title>{card.Name.split('=')[0]}</Title>
-                  <yearsInfo>
-                    <year> Year: {card.Year}</year>
-                  </yearsInfo>
+                  <Title>{card.Name.split('=')[0]+"- "+card.Artist}</Title>
+
                 </TitleReviewContainer>
                 <SecondaryInfoContainer>
                   <IconWithText>
                     <IconContainer>
                     </IconContainer>
-                    <Text>{card.Artist}</Text>
+                    <Text>Year: {card.Year}</Text>
                   </IconWithText>
                   <IconWithText>
                     <IconContainer>
