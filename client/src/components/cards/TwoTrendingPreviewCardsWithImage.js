@@ -9,6 +9,8 @@ import { ReactComponent as LocationIcon } from "feather-icons/dist/icons/map-pin
 import { ReactComponent as TimeIcon } from "feather-icons/dist/icons/clock.svg";
 import { ReactComponent as TrendingIcon } from "feather-icons/dist/icons/trending-up.svg";
 import { ReactComponent as ArrowRightIcon } from "images/arrow-right-icon.svg";
+import EllipseButtonBigger from "../../styles/EllipseButtonBigger";
+
 import {Link} from "react-router-dom";
 
 const Container = tw.div`relative`;

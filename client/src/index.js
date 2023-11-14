@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import AllCds from "./pages/AllCds";
 import AllVinyls from "./pages/AllVinyls";
 import AddingVinyl from "./pages/AddingVinyl";
+import {AboutScreen} from "./pages/AboutScreen";
 Modal.setAppElement("#root");
 const router= createBrowserRouter([{
     path:"/",
@@ -35,6 +36,10 @@ const router= createBrowserRouter([{
     {
         path:"/AddVinyl",
         element:<AddingVinyl/>
+    },
+    {
+        path:"/AboutScreen",
+        element:<AboutScreen/>
     }
 
 ]);

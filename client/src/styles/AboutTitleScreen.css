@@ -1,0 +1,38 @@
+.about-container {
+    font-family: 'Arial', sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.title-header {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.main-heading {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.features-list {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+}
+
+.features-list li {
+    margin-bottom: 20px;
+}
+
+.features-list h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.closing-heading {
+    font-size: 1.5em;
+    margin-top: 20px;
+}

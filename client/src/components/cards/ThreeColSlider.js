@@ -7,7 +7,7 @@ import {PrimaryButton as PrimaryButtonBase} from "components/misc/Buttons";
 import {ReactComponent as ChevronLeftIcon} from "feather-icons/dist/icons/chevron-left.svg";
 import {ReactComponent as ChevronRightIcon} from "feather-icons/dist/icons/chevron-right.svg";
 import {Link} from "react-router-dom";
-
+import EllipseButton from "../../styles/EllipseButton";
 import Header, { LogoLink, NavLinks, NavLink as NavLinkBase } from "../headers/light.js";
 import {DOMAIN} from "../../constants";
 
@@ -195,7 +195,7 @@ export default (props) => {
                 </IconWithText>
               </TextInfo>
               <Link to= {`/Details/${card._id}`} >
-                <Text>More Details</Text>
+               <EllipseButton/>
               </Link>
               {/*<PrimaryButton> <Link to= "/Details"/></PrimaryButton>*/}
             </Card>

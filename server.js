@@ -88,6 +88,21 @@ app.get('/api/asked/:id',(req, res)=>{
         res.send(result);
     });
 });
+// app.get('/api/isrecommend/:type/:id',(req, res)=>{
+//     const type=req.params.type;
+//     const id=req.params.id;
+//     const result= run().then((records)=>{
+//         const music=records;
+//         let musics={};
+//         if(type==="CD"){
+//             musics=music.CDs;
+//         }
+//         else {
+//             musics=music.Vinyls;
+//         }
+//         res.send(musics[id].isRecommend);
+//     });
+// });
 app.get('/api/recommend',(req, res)=>{
 
     const result= run().then((records)=>{
