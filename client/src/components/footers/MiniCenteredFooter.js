@@ -2,7 +2,7 @@ import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import {Container as ContainerBase } from "components/misc/Layouts.js"
-import mylogo from "../../images/mylogo.svg";
+import logo from "../../images/newyellowlogorem.png";
 import { ReactComponent as FacebookIcon } from "../../images/facebook-icon.svg";
 import { ReactComponent as TwitterIcon } from "../../images/twitter-icon.svg";
 import { ReactComponent as YoutubeIcon } from "../../images/youtube-icon.svg";
@@ -35,7 +35,7 @@ export default () => {
       <Content>
         <Row>
           <LogoContainer>
-            <LogoImg src={mylogo} />
+            <LogoImg src={logo} />
             <LogoText>Tavor's Records</LogoText>
           </LogoContainer>
           <LinksContainer>

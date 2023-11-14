@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.2713f9cf.css",
-    "main.js": "/static/js/main.4811293a.js",
+    "main.js": "/static/js/main.18d7b068.js",
     "static/media/MainLandingPageHero.png": "/static/media/MainLandingPageHero.30b380787ef7adb09eb6.png",
     "static/media/AgencyLandingPage.jpeg": "/static/media/AgencyLandingPage.717f8ed6737d6161b153.jpeg",
     "static/media/HotelTravelLandingPage.jpeg": "/static/media/HotelTravelLandingPage.7cba2215c02e6e82fc39.jpeg",
@@ -14,6 +14,7 @@
     "static/media/HostingCloudLandingPage.jpeg": "/static/media/HostingCloudLandingPage.6b09b2aa8f447502dfc8.jpeg",
     "static/media/hero-screenshot-1.png": "/static/media/hero-screenshot-1.40a097b525c2f8c9808e.png",
     "static/media/AboutUsPage.jpeg": "/static/media/AboutUsPage.c9232ae2548e9f49c26b.jpeg",
+    "static/media/newyellowlogorem.png": "/static/media/newyellowlogorem.bb47b6658b38e75ab4dc.png",
     "static/media/BlogIndexPage.jpeg": "/static/media/BlogIndexPage.0f03fbdc27582d9a442b.jpeg",
     "static/media/myrecordspic.jpg": "/static/media/myrecordspic.6db4d38d4be254ff85fd.jpg",
     "static/media/PricingPage.jpeg": "/static/media/PricingPage.c6e93374a0c9c5f10c44.jpeg",
@@ -34,7 +35,6 @@
     "static/media/login-illustration.svg": "/static/media/login-illustration.39a64f784d3474ef7b31bd14ad6360c7.svg",
     "static/media/design-illustration.svg": "/static/media/design-illustration.415c277c5396f5d93e398f34f14d8267.svg",
     "static/media/signup-illustration.svg": "/static/media/signup-illustration.2876a99f67ce2b50caba20ca9da1e6ee.svg",
-    "static/media/mylogo.svg": "/static/media/mylogo.68778aec003ef35914c29a5ef08b4bf4.svg",
     "static/media/server-secure-illustration.svg": "/static/media/server-secure-illustration.7c9a441e69a156e36492100dee01526e.svg",
     "static/media/server-redundancy-illustration.svg": "/static/media/server-redundancy-illustration.c60061a07bc1cae436e557144949fd62.svg",
     "static/media/customer-support-illustration.svg": "/static/media/customer-support-illustration.7164659e338b9013dc196213c60c8ad2.svg",
@@ -94,10 +94,10 @@
     "static/media/arrow-right-3-icon.svg": "/static/media/arrow-right-3-icon.d415f77e8dc81ff77fdb53c0ee2da771.svg",
     "static/media/handle-icon.svg": "/static/media/handle-icon.75eb6395a03cd55833f64fd24df39ff5.svg",
     "main.2713f9cf.css.map": "/static/css/main.2713f9cf.css.map",
-    "main.4811293a.js.map": "/static/js/main.4811293a.js.map"
+    "main.18d7b068.js.map": "/static/js/main.18d7b068.js.map"
   },
   "entrypoints": [
     "static/css/main.2713f9cf.css",
-    "static/js/main.4811293a.js"
+    "static/js/main.18d7b068.js"
   ]
 }
