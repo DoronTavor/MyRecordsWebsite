@@ -27,15 +27,20 @@ const RightColumn = styled.div`
   ${tw`bg-green-500 bg-cover bg-center xl:ml-24 h-96 lg:h-auto lg:w-1/2 lg:flex-1`}
 `;
 const backgroundImageUrl= 'url("https://www.fourstateshomepage.com/wp-content/uploads/sites/36/2023/03/Vinyl-Record-Player.jpg?w=900")';
-
+const ControlButton = styled(PrimaryButtonBase)`
+  ${tw`mt-4 sm:mt-0 first:ml-0 ml-6 rounded-full p-2`}
+  svg {
+    ${tw`w-6 h-6`}
+  }
+`;
 const PrimaryButton = tw(PrimaryButtonBase)`
   mt-auto 
   sm:text-lg
-  rounded-none
   w-32 h-32 // Adjust the width and height for a square button
-  
   py-2 px-4  // Adjust the padding to make it smaller
-`;const port =3005;
+`;
+
+const port =3005;
 function setAlbum(data){
     let album = {};
     album._id=data._id;
@@ -58,10 +63,60 @@ const handleClickMoreDetails=(event)=>{
         // For example, you can perform a state update or any other logic you need.
     }
 };
+function OnClickForReco(id){
+
+
+        fetch(`/api/setIsRecommend/${id}`,{
+            method:"POST"
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json(); // This returns a Promise
+                } else {
+                    console.log('Request failed with status ' + response.status);
+                    throw new Error('Request failed with status ' + response.status);
+                }
+            })
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+        return ()=>{
+            console.log('DetailsForItem unmount')
+        }
+    ;
+}
 function DetailsForItem(){
     const {id}=useParams();
     const [musicObject,setMusicObject] = useState();
+    const[isRecommend,setIsRecommend]=useState();
+    useEffect(()=>{
+        fetch(`/api/isRecommend/${id}`)
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json(); // This returns a Promise
+                } else {
+                    console.log('Request failed with status ' + response.status);
+                    throw new Error('Request failed with status ' + response.status);
+                }
+            })
+            .then((data) => {
+                console.log(data);
+                setIsRecommend(data.isRecommend);
 
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+        return ()=>{
+            console.log('DetailsForItem unmount')
+        }
+    },[id]);
 
     //${DOMAIN}
      useEffect(()=>{
@@ -78,6 +133,7 @@ function DetailsForItem(){
                  console.log(data);
                  setMusicObject(data);
 
+
              })
              .catch((error) => {
                  console.log(error);
@@ -87,7 +143,10 @@ function DetailsForItem(){
              console.log('DetailsForItem unmount')
          }
      },[id]);
-
+     function onClickButton(){
+         setIsRecommend(!isRecommend);
+         OnClickForReco(id);
+     }
 
 
      if(!musicObject) {
@@ -108,6 +167,7 @@ function DetailsForItem(){
             <StyledHeader links={navLinks} collapseBreakpointClass="sm" />
 
             <ImageForItem image={musicObject.Image}></ImageForItem>
+            <ControlButton onClick={onClickButton}>   {isRecommend ? "Recommend Record" : 'Unrecommend Record'} </ControlButton>
             <Title name={musicObject.Name.split('=')[0]} artist={musicObject.Artist}
                    year={musicObject.Year} format={musicObject.Format} label={musicObject.label} country={musicObject.country} type={musicObject.type}
                    genres={musicObject.genres}/>

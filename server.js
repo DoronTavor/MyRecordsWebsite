@@ -4,13 +4,13 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const express= require('express');
+require('dotenv').config();
 
 
 const {allCds,allVinyls,asked, recommend, findAsked}= require('./readers/DiscogsReader');
 
 const app = express();
 
-const uri = "mongodb+srv://tavorsoftwareng:DavidBlu13@clusterrecords.vwadsqf.mongodb.net/?retryWrites=true&w=majority";
 
 app.use(express.json());
 
@@ -21,7 +21,7 @@ app.use(cors());
 
 const port=  process.env.PORT || 3005;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
+const client = new MongoClient(process.env.uri, {
     serverApi: {
         version: ServerApiVersion.v1,
         strict: true,
@@ -93,7 +93,47 @@ async function setAllFalse() {
         await client.close();
     }
 }
+async function setOneRecommendTrue(itemId,currentValue,type) {
+    try {
+        // Connect to MongoDB
+        await client.connect();
+        console.log('Connected to the database');
 
+        console.log(type,currentValue);
+
+        const db = client.db('RecordsDB');
+        const collection = db.collection('RecordsDB');
+
+        // Update the specific item with _id equal to itemId
+        if(type==="Music.CDs._id"){
+            const result = await collection.updateOne(
+                { ['Music.CDs.' + itemId]: { $exists: true } },
+                { $set: { ['Music.CDs.' + itemId + '.isRecommend']: !currentValue } }
+            );
+            // await collection.updateOne(
+            //     { [`Music.CDs._id`]: itemId },
+            //     { $set: { [`Music.CDs.$.isRecommend`]: !currentValue } }
+            // );
+        }
+        else if(type==="Music.Vinyls._id"){
+            const result = await collection.updateOne(
+                { ['Music.Vinyls.' + itemId]: { $exists: true } },
+                { $set: { ['Music.Vinyls.' + itemId + '.isRecommend']: !currentValue } }
+            );
+            /*await collection.updateOne(
+                { [`Music.Vinyls._id`]: itemId },
+                { $set: { [`Music.Vinyls.$.isRecommend`]: !currentValue } }
+            );*/
+        }
+
+
+        console.log(`Updated item with _id ${itemId} to have isRecommend:${!currentValue}`);
+
+    } finally {
+        // Close the MongoDB connection
+        await client.close();
+    }
+}
 app.get('/api/setFalse',(req, res)=>{
     const run=setAllFalse().then((records)=>{
             res.send(records);
@@ -166,7 +206,7 @@ app.get('/api/recommend',(req, res)=>{
             1562548:Vinyls[1562548],
             5882830:Vinyls[5882830]
         }
-        const keys=[26924756,27747453,1562548,5882830];
+        const keys=returnRecomended(Cds,Vinyls);
         recommend(keys).then((result)=>{
             res.send(result);
         });
@@ -174,6 +214,31 @@ app.get('/api/recommend',(req, res)=>{
         //res.send(rets);
     });
 });
+
+app.post('/api/setIsRecommend/:id',(req, res)=>{
+    const id=req.params.id;
+    const result= run().then((records) => {
+        const Cds = records.CDs;
+        const Vinyls = records.Vinyls;
+        if (Cds.hasOwnProperty(id)) {
+            res.send(setOneRecommendTrue(id,Cds[id].isRecommend,"Music.CDs._id"));
+        } else if (Vinyls.hasOwnProperty(id)) {
+            res.send(setOneRecommendTrue(id,Vinyls[id].isRecommend,"Music.Vinyls._id"));
+        }
+    });
+});
+app.get('/api/isRecommend/:id',(req, res)=>{
+    const id=req.params.id;
+    const result= run().then((records) => {
+        const Cds = records.CDs;
+        const Vinyls = records.Vinyls;
+        if (Cds.hasOwnProperty(id)) {
+            res.send({isRecommend: Cds[id].isRecommend}) ;
+        } else if (Vinyls.hasOwnProperty(id)) {
+            res.send({isRecommend: Vinyls[id].isRecommend}) ;
+        }
+    });
+})
 
 app.post('/api/users/login',(req, res)=>{
     const {email,password}=req.body
@@ -212,3 +277,20 @@ function queryStringToObject(queryString) {
 
     return obj;
 }
+
+function returnRecomended(cds,vinyls){
+    let ret=[];
+    for(const id in cds){
+        if(cds[id].isRecommend){
+            ret.push(id);
+        }
+    }
+    for(const id in vinyls){
+        if(vinyls[id].isRecommend){
+            ret.push(id);
+        }
+    }
+    return ret;
+}
+
+
