@@ -9,6 +9,7 @@ import ImageForItem from "../components/Boxes/ImageForItem";
 import TrackList from "../components/Boxes/TrackList";
 import Header, { LogoLink, NavLinks, NavLink as NavLinkBase } from "../components/headers/light";
 import {useParams} from "react-router-dom";
+import EllipseButton from "../styles/EllipseButton";
 import {DOMAIN} from "../constants";
 
 const StyledHeader = styled(Header)`
@@ -112,6 +113,7 @@ function DetailsForItem(){
                    genres={musicObject.genres}/>
             <TrackList TrackList={musicObject.TrackList}></TrackList>
             <PrimaryButton data-link={musicObject.uri} onClick={handleClickMoreDetails}>  Explore more on Discogs</PrimaryButton>
+
 
             <Footer />
         </AnimationRevealPage>

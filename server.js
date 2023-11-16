@@ -51,6 +51,55 @@ async function run() {
         await client.close();
     }
 }
+async function setAllFalse() {
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+        const db = client.db('RecordsDB');
+        const collection = db.collection('RecordsDB');
+
+        // Query the collection and fetch all documents
+        const records = await collection.find().toArray();
+
+
+        // Iterate over the keys of "Music" (e.g., "CDs", "Vinyls")
+        Object.keys(records[0].Music).forEach(type => {
+            // Check if the value under the current type is an object
+            if (typeof records[0].Music[type] === 'object' && records[0].Music[type] !== null) {
+                // Set "isRecommend" to false for all properties in the current type
+                Object.keys(records[0].Music[type]).forEach(itemKey => {
+                    records[0].Music[type][itemKey].isRecommend = false;
+                });
+            }
+        });
+
+
+
+
+        // Update the documents in the collection with the modified data
+        await collection.updateMany({}, { $set: { "Music": records[0].Music } });
+
+        // Log the updated music data
+        console.log("Updated music data:", records[0].Music);
+
+        return records[0].Music;
+    } finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
+    }
+}
+
+app.get('/api/setFalse',(req, res)=>{
+    const run=setAllFalse().then((records)=>{
+            res.send(records);
+        }
+    );
+});
 
 app.get('/api/cd/all',(req,res)=>{
     const result= run().then((records)=>{
