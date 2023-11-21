@@ -48,6 +48,19 @@ const PrimaryButton = tw(PrimaryButtonBase)`
 `;const port=3005;
 const Content = tw.div`max-w-screen-xl mx-auto py-16 lg:py-20`;
 
+function setStringForSearching(object) {
+    const queryString = `q=${(object.artist)}
+        +release_title=${(object.release_title)}
+        +artist=${(object.artist)}
+        +label=${(object.label)}
+        +country=${(object.country)}
+        +year=${(object.year)}
+        +format=${(object.format)}
+        +per_page=${3}+pages=${1}`;
+
+    return queryString;
+}
+
 function AddingVinyl(){
     const [musicObjectToAdd,setMusicObjectToAdd]=useState({});
     const [musicObjectReturned,setMusicObjectReturned]=useState({});
@@ -60,11 +73,38 @@ function AddingVinyl(){
         setMusicObjectToAdd(updatedObject);
         console.log(musicObjectToAdd);
     }
+    function addRecord(obj){
+        fetch("/api/addVinyl", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(obj)
+        }).then(r  =>{
+            if(r.status===200){
+                alert("Added successfully");
+            }
+            else if(r.status===404){
+                alert("didnt Added successfully");
+            }
+        })
+    }
     //${DOMAIN}
     function handleButtonClick() {
-        const queryString = Object.keys(musicObjectToAdd)
-            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(musicObjectToAdd[key])}`)
-            .join('&');
+        let demo= {
+            "q":"Depeche Mode",
+            "release_title": "Music For The Masses",
+            "artist": "Depeche Mode",
+            "label": "Mute",
+            "country": "Israel",
+            "year": "1987",
+            "format": "Vinyl, LP, Album",
+            "per_page":3,
+            "pages":1
+        };
+        //setMusicObjectToAdd(demo);
+        const queryString = setStringForSearching(musicObjectToAdd);
+        console.log(decodeURIComponent(queryString));
         fetch(`/api/getAskedFromUser/${queryString}`)
             .then((response) => {
                 if (response.status === 200) {
@@ -77,7 +117,17 @@ function AddingVinyl(){
                 console.log(data);
                 //Present the result
                 setMusicObjectReturned(data);
+                console.log("Release Title: " + data.release_title +
+                    "\nArtist: " + data.artist +
+                    "\nCountry: " + data.country +
+                    "\nLabel: " + data.label +
+                    "\nYear: " + data.year +
+                    "\nFormat: " + data.format+
+                    "\nID: "+data.id
+
+                );
                 setIsRet(true);
+                addRecord(musicObjectToAdd);
             })
             .catch((error) => {
                 console.log(error);
@@ -100,8 +150,8 @@ function AddingVinyl(){
             <h3>Title</h3>
             <input
                 type="text"
-                name="title"
-                value={musicObjectToAdd.title}
+                name="release_title"
+                value={musicObjectToAdd.release_title}
                 onChange={handleInputChange}
             />
             <h3>Artist</h3>
@@ -136,10 +186,10 @@ function AddingVinyl(){
             <input
                 type="text"
                 name="format"
-                value="Vinyl"
+                value={musicObjectToAdd.format}
                 onChange={handleInputChange}
             />
-            <button onClick={handleButtonClick}>Add To Collection </button>
+            <button onClick={handleButtonClick}>find the record</button>
             <Footer />
         </AnimationRevealPage>
 

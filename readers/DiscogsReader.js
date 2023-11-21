@@ -74,11 +74,13 @@ function asked(key){
             return {};
         });
 }
-function findAsked(object){
-
-    return fetch(`https://api.discogs.com/database/search
-    ?title=${object.title}&artist=${object.artist}&label=${object.label}
-    &country=${object.country}&year=${object.year}&format=${object.format}&per_page=${3}&pages=${1}`, {
+function findAsked(string){
+    // console.log(string.replaceAll("+","&"));
+    const object= parseQueryString(string.replaceAll("+","&").replace(/\s+/g, ' '));
+    console.log("The obj")
+    console.log(object);
+    return fetch(`https://api.discogs.com/database/search?q=${object.q}&type=${object.type}&release_title=${object.release_title}
+    &artist=${object.artist}&label=${object.label}&country=${object.country}&year=${object.year}&format=${object.format}&per_page=${object.per_page}&pages=${object.pages}`, {
         method: 'GET',
         headers: {
             'Authorization':  process.env.AUTHORIZATIONHEADER,
@@ -88,7 +90,7 @@ function findAsked(object){
             if (!res.ok) {
                 throw new Error(`HTTP error! Status: ${res.status}`);
             }
-            console.log(res.json());
+            // console.log(res.json());
             return res.json();
         })
         .then((data) => setObjectForAsked(data))
@@ -97,13 +99,32 @@ function findAsked(object){
             return {};
         });
 }
+function parseQueryString(queryString) {
+    // Remove the leading '?' if present
+    if (queryString.charAt(0) === '?') {
+        queryString = queryString.slice(1);
+    }
+
+    // Split the string into key-value pairs
+    const pairs = queryString.split('&');
+
+    // Create an object to store the key-value pairs
+    const result = {};
+
+    // Iterate over the pairs and populate the object
+    pairs.forEach(pair => {
+        const [key, value] = pair.split('=');
+        result[key.trim()] = decodeURIComponent(value.trim());
+    });
+
+    return result;
+}
 
 function setObjectForAsked(data){
-    let title= ["results"][0].title.split(" - ")[1];
-    let artist=["results"][0].title.split(" - ")[0];
     return{
-        title:title,
-        artist:artist,
+        id:data["results"][0].id,
+        release_title:data["results"][0].title,
+        artist:data["results"][0]["title"].split("-")[0],
         country:data["results"][0].country,
         label:data["results"][0].label[0],
         year:data["results"][0].year,

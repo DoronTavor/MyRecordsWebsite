@@ -1,6 +1,6 @@
 
 const path = require('path')
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId} = require('mongodb');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const express= require('express');
@@ -47,6 +47,51 @@ async function run() {
         return music;
 
     } finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
+    }
+}
+async function add(obj){
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        const db = client.db('RecordsDB');
+        const collection = db.collection('RecordsDB');
+        const newVinyl = {
+            _id: obj.id,  // Set a unique ID for the new object
+            Name: obj.release_title.split("-")[1],
+            Artist: obj.artist,
+            Format: obj.format,
+            isRecommend: false,
+        };
+
+        const filter = { _id: obj.id };
+
+        // Specify the update operation
+        const update = {
+            $push: {
+                'Music.Vinyls': newVinyl,
+            },
+        };
+
+        // Perform the update
+        await collection.updateOne(filter, update, function (err, result) {
+            if (err) {
+                console.error('Error updating document', err);
+                return false;
+            } else {
+                console.log(`Document updated successfully. Matched ${result.matchedCount} document(s) and modified ${result.modifiedCount} document(s).`);
+                return true;
+            }
+            // Query the collection and fetch all documents
+
+
+        });
+    }
+    finally {
         // Ensures that the client will close when you finish/error
         await client.close();
     }
@@ -134,6 +179,17 @@ async function setOneRecommendTrue(itemId,currentValue,type) {
         await client.close();
     }
 }
+
+app.post("/api/addVinyl",(req, res)=>{
+    const run=add(req.body).then((resp)=>{
+        if(resp){
+            res.status(200);
+        }
+        else{
+            res.status(404);
+        }
+    });
+});
 app.get('/api/setFalse',(req, res)=>{
     const run=setAllFalse().then((records)=>{
             res.send(records);
@@ -249,10 +305,22 @@ app.post('/api/users/login',(req, res)=>{
 
 });
 
-app.get("/api/getAskedFromUser/:musicObject",(req, res)=>{
-    const object=queryStringToObject(req.params.musicObject);
+app.get("/api/getAskedFromUser/:musicString",(req, res)=>{
+    // const string=decodeURIComponent((req.params.musicString));
+    const string= req.params.musicString.replaceAll("%20","");
+    console.log(string);
     //console.log(object);
-    findAsked(object).then((result)=>{
+    findAsked(string).then((result)=>{
+        console.log("THE RES: "+ result["id"]);
+        console.log("Release Title: " + result.release_title +
+            "\nArtist: " + result.artist +
+            "\nCountry: " + result.country +
+            "\nLabel: " + result.label +
+            "\nYear: " + result.year +
+            "\nFormat: " + result.format
+            +"\nID: "+result.id
+
+        );
         console.log("The res: "+result);
         res.send(result);
     });

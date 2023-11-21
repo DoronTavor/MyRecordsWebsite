@@ -8,7 +8,7 @@ function Modal(musicObject,open){
                 <div className= 'modalRight'>
                     <p className='closeBtn'>X</p>
                     <div className='content'>
-                        <h3>Title: {musicObject.title}</h3>
+                        <h3>Title: {musicObject.release_title}</h3>
                         <h3> Artist: {musicObject.artist}</h3>
                         <h3> Label: {musicObject.label}</h3>
                         <h3> Country: {musicObject.country}</h3>
