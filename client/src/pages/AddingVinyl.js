@@ -74,17 +74,18 @@ function AddingVinyl(){
         console.log(musicObjectToAdd);
     }
     function addRecord(obj){
-        fetch("/api/addVinyl", {
+        console.log("AddRec met "+obj.id);
+        fetch(`/api/addVinyl`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(obj)
-        }).then(r  =>{
-            if(r.status===200){
+        }).then(response  =>{
+            if(response.ok){
                 alert("Added successfully");
             }
-            else if(r.status===404){
+            else {
                 alert("didnt Added successfully");
             }
         })
@@ -127,7 +128,7 @@ function AddingVinyl(){
 
                 );
                 setIsRet(true);
-                addRecord(musicObjectToAdd);
+                addRecord(data);
             })
             .catch((error) => {
                 console.log(error);
@@ -146,7 +147,7 @@ function AddingVinyl(){
         <AnimationRevealPage>
             <StyledHeader links={navLinks} collapseBreakpointClass="sm" />
             <Heading> Add Vinyl</Heading>
-            {isRet &&<Modal musicObject={musicObjectReturned} open={isRet}/>}
+            {/*{isRet &&<Modal musicObject={musicObjectReturned} open={isRet}/>}*/}
             <h3>Title</h3>
             <input
                 type="text"

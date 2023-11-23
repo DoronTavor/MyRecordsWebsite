@@ -60,37 +60,36 @@ async function add(obj){
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
         const db = client.db('RecordsDB');
         const collection = db.collection('RecordsDB');
+        console.log(obj);
+        console.log(obj.id);
         const newVinyl = {
             _id: obj.id,  // Set a unique ID for the new object
-            Name: obj.release_title.split("-")[1],
+            Name: obj.release_title,
             Artist: obj.artist,
             Format: obj.format,
             isRecommend: false,
         };
 
-        const filter = { _id: obj.id };
 
-        // Specify the update operation
+        const filter = {}; // Assuming you want to update the entire document
+        const key = `Music.Vinyls.${obj.id}`;
         const update = {
-            $push: {
-                'Music.Vinyls': newVinyl,
+            $set: {
+                [key]: newVinyl,
             },
         };
 
-        // Perform the update
-        await collection.updateOne(filter, update, function (err, result) {
-            if (err) {
-                console.error('Error updating document', err);
-                return false;
-            } else {
-                console.log(`Document updated successfully. Matched ${result.matchedCount} document(s) and modified ${result.modifiedCount} document(s).`);
-                return true;
-            }
-            // Query the collection and fetch all documents
+        // Use updateOne to update the specified field
+        const result = await collection.updateOne(filter, update);
 
+        console.log(`Document updated successfully. Matched ${result.matchedCount} document(s) and modified ${result.modifiedCount} document(s).`);
 
-        });
+        return true;
+    } catch (err) {
+        console.error('Error updating document', err);
+        return false;
     }
+
     finally {
         // Ensures that the client will close when you finish/error
         await client.close();
@@ -181,12 +180,13 @@ async function setOneRecommendTrue(itemId,currentValue,type) {
 }
 
 app.post("/api/addVinyl",(req, res)=>{
+    console.log(req.body.id);
     const run=add(req.body).then((resp)=>{
         if(resp){
-            res.status(200);
+            res.status(200).json({ status: 'success'});
         }
         else{
-            res.status(404);
+            res.status(500).json({ status: 'fail'});
         }
     });
 });
