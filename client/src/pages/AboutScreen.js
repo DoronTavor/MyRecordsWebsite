@@ -25,8 +25,7 @@ export const AboutScreen = () => {
         <NavLinks key={1}>
             <NavLink to="/allCds" >CDs</NavLink>
             <NavLink to="/allVinyls">Vinyls</NavLink>
-            <NavLink to="#">AddCD</NavLink>
-            <NavLink to="/AddVinyl">AddVinyl</NavLink>
+
             <NavLink to="#">Login</NavLink>
         </NavLinks>
     ];

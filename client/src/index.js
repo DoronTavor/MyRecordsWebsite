@@ -12,6 +12,7 @@ import AllCds from "./pages/AllCds";
 import AllVinyls from "./pages/AllVinyls";
 import AddingVinyl from "./pages/AddingVinyl";
 import {AboutScreen} from "./pages/AboutScreen";
+import DeveloperPage from "./pages/DeveloperPage";
 Modal.setAppElement("#root");
 const router= createBrowserRouter([{
     path:"/",
@@ -40,6 +41,10 @@ const router= createBrowserRouter([{
     {
         path:"/AboutScreen",
         element:<AboutScreen/>
+    },
+    {
+        path:"/DeveloperPage/:emailAndName",
+        element:<DeveloperPage/>
     }
 
 ]);

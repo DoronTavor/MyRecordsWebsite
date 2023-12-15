@@ -4,10 +4,14 @@ const { MongoClient, ServerApiVersion, ObjectId} = require('mongodb');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const express= require('express');
+
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
 require('dotenv').config();
 
 
 const {allCds,allVinyls,asked, recommend, findAsked}= require('./readers/DiscogsReader');
+const passport = require("express/lib/router");
 
 const app = express();
 
@@ -178,6 +182,95 @@ async function setOneRecommendTrue(itemId,currentValue,type) {
         await client.close();
     }
 }
+async function checkCredentials(email, password) {
+    console.log(email,password);
+
+    try {
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        const database = client.db('RecordsDB');
+        const usersCollection = database.collection('RecordsDB');
+
+
+        let users = await usersCollection.find().toArray();
+        users=users[0].Users;
+        console.log(users);
+        console.log("HEY");
+        for(const userID in users){
+            let user=users[userID];
+
+            if (user.email === email && user.password === password) {
+                console.log('User exists!');
+                await client.close();
+                return {
+                    found:true,
+                    name:user.Name,
+                    email:user.email
+                };
+            } else {
+                console.log('User does not exist, or the password isnt correct, try again');
+                await client.close();
+                return {
+                    found:false
+                };
+            }
+        }
+
+
+
+    } finally {
+        await client.close();
+    }
+}
+async function findName(email) {
+
+    try {
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        const database = client.db('RecordsDB');
+        const usersCollection = database.collection('RecordsDB');
+
+
+        let users = await usersCollection.find().toArray();
+        users=users[0].Users;
+        console.log(users);
+        console.log("HEY");
+        for(const userID in users){
+            let user=users[userID];
+
+            if (user.email === email ) {
+                return user.Name;
+
+            }
+        }
+
+
+
+    } finally {
+        await client.close();
+    }
+}
+app.get("/api/users/getName",(req, res)=>{
+    let email=req.params.email;
+    const run=findName(email).then((name)=>{
+        res.send({Name:name});
+    })
+});
+// passport.use(new GoogleStrategy({
+//         clientID: process.env.CLIENT_ID,
+//         clientSecret: process.env.CLIENT_SECRET,
+//         callbackURL: "https://myrecordswebsitebackend.onrender.com/AddVinyl"
+//     },
+//     function(accessToken, refreshToken, profile, cb) {
+//         User.findOrCreate({ googleId: profile.id }, function (err, user) {
+//             return cb(err, user);
+//         });
+//     }
+// ));
 
 app.post("/api/addVinyl",(req, res)=>{
     console.log(req.body.id);
@@ -297,13 +390,19 @@ app.get('/api/isRecommend/:id',(req, res)=>{
 })
 
 app.post('/api/users/login',(req, res)=>{
-    const {email,password}=req.body
-    // validate email and password
-
-    const token = jwt.sign({email},'tavor')
-    console.log(token)
+    const details=req.body;
+    console.log(details);
+    const result=checkCredentials(details["email"],details["password"]).then((resp)=>{
+        if(resp.found){
+            res.status(200).json(resp);
+        }
+        else{
+            res.status(500).json({ status: 'failed login'});
+        }
+    });
 
 });
+
 
 app.get("/api/getAskedFromUser/:musicString",(req, res)=>{
     // const string=decodeURIComponent((req.params.musicString));

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
@@ -8,7 +8,10 @@ import logo from "images/logo.svg";
 import googleIconImageSrc from "images/google-icon.png";
 import twitterIconImageSrc from "images/twitter-icon.png";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
+import {Link, useNavigate} from 'react-router-dom';
+
 import {DOMAIN} from "../constants";
+import {PrimaryButton as PrimaryButtonBase} from "../components/misc/Buttons";
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -32,6 +35,7 @@ const SocialButton = styled.a`
     ${tw`ml-4`}
   }
 `;
+const Text = tw(PrimaryButtonBase)`w-full mt-8`;
 
 const Form = tw.form`mx-auto max-w-xs`;
 const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
@@ -53,11 +57,11 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-sm bg-contain bg-center bg-no-repeat`}
 `;
 
-export default ({
-  logoLinkUrl = "#",
-  illustrationImageSrc = illustration,
-  headingText = "Sign In To Treact",
-  socialButtons = [
+function Login(){
+  let logoLinkUrl = "#";
+  let illustrationImageSrc = illustration;
+  let headingText = "Sign In To My website";
+  let socialButtons = [
     {
       iconImageSrc: googleIconImageSrc,
       text: "Sign In With Google",
@@ -68,43 +72,55 @@ export default ({
       text: "Sign In With Twitter",
       url: "https://twitter.com"
     }
-  ],
-  submitButtonText = "Sign In",
-  SubmitButtonIcon = LoginIcon,
-  forgotPasswordUrl = "#",
-  signupUrl = "#",
+  ];
+  let submitButtonText = "Sign In";
+  let SubmitButtonIcon = LoginIcon;
+  let forgotPasswordUrl = "#";
+  let signupUrl = "#";
 
-}) => {
+  const navigate = useNavigate();
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
+  const [newRoute, setNewRoute] = useState(null);
+  const [isSet,setIsSet]=useState(false);
   const handleSubmit = (event)=>{
       event.preventDefault()
 
-    console.log(email,password)
-    //
-    // fetch(`${DOMAIN}/api/users/login`,{
-    //   method:'POST',
-    //   body: JSON.stringify({email,password}),
-    //   headers:{
-    //     'Content-Type':'application/json'
-    //   }
-    // })
-    //     .then((response) => {
-    //       if (response.status === 200) {
-    //         return response.json(); // This returns a Promise
-    //       } else {
-    //         console.log('Request failed with status ' + response.status);
-    //         throw new Error('Request failed with status ' + response.status);
-    //       }
-    //     })
-    //     .then((data) => {
-    //       console.log(data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-  }
 
+    console.log(JSON.stringify({email,password}));
+
+    fetch(`${DOMAIN}/api/users/login`,{
+      method:'POST',
+      body: JSON.stringify({email,password}),
+      headers:{
+        'Content-Type':'application/json'
+      }
+    })
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json(); // This returns a Promise
+          } else {
+            console.log('Request failed with status ' + response.status);
+            throw new Error('Request failed with status ' + response.status);
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          console.log(JSON.stringify(data));
+          setNewRoute(`/DeveloperPage/${data.email}`);
+          setIsSet(true);
+
+
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }
+  // useEffect(() => {
+  //   if (newRoute) {
+  //     navigate(newRoute);
+  //   }
+  // }, [newRoute, navigate]);
   return <AnimationRevealPage>
     <Container>
       <Content>
@@ -134,6 +150,11 @@ export default ({
                   Sign Up
                 </a>
               </p>
+              {isSet &&(
+                  <Link to= {newRoute} >
+                    <Text>Move to Developer page</Text>
+                  </Link>
+              )}
             </FormContainer>
           </MainContent>
         </MainContainer>
@@ -144,3 +165,4 @@ export default ({
     </Container>
   </AnimationRevealPage>
 };
+export default Login;

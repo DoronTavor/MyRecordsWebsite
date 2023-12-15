@@ -8,6 +8,8 @@ import {PrimaryButton as PrimaryButtonBase} from "../components/misc/Buttons";
 import AnimationRevealPage from "../helpers/AnimationRevealPage";
 import Footer from "../components/footers/MiniCenteredFooter";
 import {DOMAIN} from "../constants";
+import EllipseButton from "../styles/EllipseButton";
+import {Link} from "react-router-dom";
 const StyledHeader = styled(Header)`
   ${tw`justify-between`}
   ${LogoLink} {
@@ -65,6 +67,8 @@ function AddingVinyl(){
     const [musicObjectToAdd,setMusicObjectToAdd]=useState({});
     const [musicObjectReturned,setMusicObjectReturned]=useState({});
     const [isRet,setIsRet]=useState(false);
+    const [isAdd,setIsAdd]=useState(false);
+    const [id,setId]=useState();
     function handleInputChange(e){
         let prevMusicObjectToAdd=musicObjectToAdd;
         const { name, value } = e.target;
@@ -84,6 +88,8 @@ function AddingVinyl(){
         }).then(response  =>{
             if(response.ok){
                 alert("Added successfully");
+                setIsAdd(true);
+                setId(obj.id);
             }
             else {
                 alert("didnt Added successfully");
@@ -147,6 +153,7 @@ function AddingVinyl(){
         <AnimationRevealPage>
             <StyledHeader links={navLinks} collapseBreakpointClass="sm" />
             <Heading> Add Vinyl</Heading>
+            {isAdd &&<Link to= {`/Details/${id}`} />}
             {/*{isRet &&<Modal musicObject={musicObjectReturned} open={isRet}/>}*/}
             <h3>Title</h3>
             <input
@@ -191,6 +198,7 @@ function AddingVinyl(){
                 onChange={handleInputChange}
             />
             <button onClick={handleButtonClick}>find the record</button>
+
             <Footer />
         </AnimationRevealPage>
 
