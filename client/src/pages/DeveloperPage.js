@@ -69,37 +69,48 @@ let navLinks = [
     </NavLinks>
 ];
 function DeveloperPage(){
-    let email=useParams();
-    let [name,setName]=useState("");
+    const { email } = useParams(); // Use destructuring to get the emailAndName parameter directly
+
+    let [name,setName]=useState("Tavor");
+
+    useEffect(() => {
+        // Fetch data or perform other actions based on the email
+        // Example fetch:
+        // fetch(`${DOMAIN}/api/users/getName/${email}`)
+        //   .then((response) => response.json())
+        //   .then((data) => setName(data.Name))
+        //   .catch((error) => console.error(error));
+
+        // Update the name state based on the email
+        setName((email.charAt(0).toUpperCase() + email.slice(1)).split(".")[0]);
+
+    }, [email]);
+
     console.log(email);
-    useEffect(()=>{
-       fetch(`${DOMAIN}/api/users/getName/${email}`,{}).then((response) => {
-           if (response.status === 200) {
-               return response.json(); // This returns a Promise
-           } else {
-
-               throw new Error('Request failed with status ' + response.status);
-           }
-       })
-           .then((data) => {
-               console.log(data);
-               console.log(data);
-               setName(data.Name);
-
-
-           })
-           .catch((error) => {
-               console.log(error);
-           });
-    });
+    // fetch(`${DOMAIN}/api/users/getName/${email}`).then((response) => {
+    //     if (response.status === 200) {
+    //         return response.json(); // This returns a Promise
+    //     } else {
+    //
+    //         throw new Error('Request failed with status ' + response.status);
+    //     }
+    // })
+    //     .then((data) => {
+    //         console.log(data);
+    //         console.log(data);
+    //         setName(data.Name);
+    //
+    //
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     });
     // setName(email.split(".")[0]);
     // setName(name.charAt(0).toUpperCase() + name.slice(1));
    return <AnimationRevealPage>
        <Hero />
        <div>
-           {name!=="" &&(
-               <h1>Hello {name}</h1>
-           )}
+           <h1>Hello {name}</h1>
            <h2> What are you want to do today?</h2>
        </div>
        <CenteredContainer>
@@ -107,10 +118,10 @@ function DeveloperPage(){
                <Link to="/AddVinyl">
                    <Text>Add Vinyl</Text>
                </Link>
-               <Link to="/AddCd">
+               <Link to="/AddCD">
                    <Text>Add Cd</Text>
                </Link>
-               <Link to="/AddUser">
+               <Link to="/AddingUser">
                    <Text>Add User</Text>
                </Link>
            </CenteredLinks>

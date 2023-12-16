@@ -4,7 +4,9 @@ import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
 import illustration from "images/login-illustration.svg";
+import ragingsouls from "images/ragingsouls.jpg";
 import logo from "images/logo.svg";
+import newYellowLogo from "images/newyellowlogo.jpg"
 import googleIconImageSrc from "images/google-icon.png";
 import twitterIconImageSrc from "images/twitter-icon.png";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
@@ -51,7 +53,7 @@ const SubmitButton = styled.button`
 
 const port =3005
 
-const IllustrationContainer = tw.div`sm:rounded-r-lg flex-1 bg-purple-100 text-center hidden lg:flex justify-center`;
+const IllustrationContainer = tw.div`sm:rounded-r-lg flex-1 bg-yellow-100 text-center hidden lg:flex justify-center`;
 const IllustrationImage = styled.div`
   ${props => `background-image: url("${props.imageSrc}");`}
   ${tw`m-12 xl:m-16 w-full max-w-sm bg-contain bg-center bg-no-repeat`}
@@ -59,7 +61,7 @@ const IllustrationImage = styled.div`
 
 function Login(){
   let logoLinkUrl = "#";
-  let illustrationImageSrc = illustration;
+  let illustrationImageSrc = ragingsouls;
   let headingText = "Sign In To My website";
   let socialButtons = [
     {
@@ -126,7 +128,7 @@ function Login(){
       <Content>
         <MainContainer>
           <LogoLink href={logoLinkUrl}>
-            <LogoImage src={logo}/>
+            <LogoImage src={newYellowLogo}/>
           </LogoLink>
           <MainContent>
             <Heading>{headingText}</Heading>

@@ -55,6 +55,65 @@ async function run() {
         await client.close();
     }
 }
+async function addUser(obj){
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        const db = client.db('RecordsDB');
+        const collection = db.collection('RecordsDB');
+        console.log(obj);
+
+
+
+        const filter = {}; // Assuming you want to update the entire document
+        const key = `Users.${obj.email.replaceAll(".","").replace("@","")}`;
+
+        // const update = {
+        //     $set: {
+        //         [key]: obj,
+        //     },
+        // };
+        //
+        // // Use updateOne to update the specified field
+        // const result = await collection.updateOne(filter, update);
+        const update = { $set: { [key]: obj } };
+        console.log(key);
+        const res=await collection.updateOne({ [key]: { $exists: false } }, // Filter criteria
+            { $set: { [key]: obj } }// Update operation
+            ,{upsert:true}, (insertErr, result) => {
+            if (insertErr) {
+                console.log('Error inserting new user:', insertErr);
+                return false;
+            } else {
+                console.log('New user added:');
+                return true;
+            }
+
+        });
+        if (res.modifiedCount > 0 || res.upsertedCount > 0) {
+            console.log('User added:', obj);
+            return true;
+        } else {
+            console.log('User not added.');
+            return false;
+        }
+
+        // console.log(`Document updated successfully. Matched ${result.matchedCount} document(s) and modified ${result.modifiedCount} document(s).`);
+        //
+       // return true;
+    } catch (err) {
+        console.error('Error updating document', err);
+        return false;
+    }
+
+    finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
+    }
+}
 async function add(obj){
     try {
         // Connect the client to the server	(optional starting in v4.7)
@@ -212,9 +271,7 @@ async function checkCredentials(email, password) {
             } else {
                 console.log('User does not exist, or the password isnt correct, try again');
                 await client.close();
-                return {
-                    found:false
-                };
+
             }
         }
 
@@ -254,11 +311,23 @@ async function findName(email) {
         await client.close();
     }
 }
-app.get("/api/users/getName",(req, res)=>{
+app.get("/api/users/getName/:email",(req, res)=>{
     let email=req.params.email;
     const run=findName(email).then((name)=>{
+        console.log(name);
         res.send({Name:name});
     })
+});
+app.post("/api/users/addUser",(req, res)=>{
+
+    const run=addUser(req.body).then((resp)=>{
+        if(resp){
+            res.status(200).json({ status: 'success'});
+        }
+        else{
+            res.status(500).json({ status: 'fail'});
+        }
+    });
 });
 // passport.use(new GoogleStrategy({
 //         clientID: process.env.CLIENT_ID,
@@ -273,6 +342,17 @@ app.get("/api/users/getName",(req, res)=>{
 // ));
 
 app.post("/api/addVinyl",(req, res)=>{
+    console.log(req.body.id);
+    const run=add(req.body).then((resp)=>{
+        if(resp){
+            res.status(200).json({ status: 'success'});
+        }
+        else{
+            res.status(500).json({ status: 'fail'});
+        }
+    });
+});
+app.post("/api/addCD",(req, res)=>{
     console.log(req.body.id);
     const run=add(req.body).then((resp)=>{
         if(resp){

@@ -13,6 +13,8 @@ import AllVinyls from "./pages/AllVinyls";
 import AddingVinyl from "./pages/AddingVinyl";
 import {AboutScreen} from "./pages/AboutScreen";
 import DeveloperPage from "./pages/DeveloperPage";
+import AddingCD from "./pages/AddingCD";
+import AddingUser from "./pages/AddingUser";
 Modal.setAppElement("#root");
 const router= createBrowserRouter([{
     path:"/",
@@ -39,12 +41,20 @@ const router= createBrowserRouter([{
         element:<AddingVinyl/>
     },
     {
+        path:"/AddCD",
+        element:<AddingCD/>
+    },
+    {
         path:"/AboutScreen",
         element:<AboutScreen/>
     },
     {
-        path:"/DeveloperPage/:emailAndName",
+        path:"/DeveloperPage/:email",
         element:<DeveloperPage/>
+    },
+    {
+        path:"/AddingUser",
+        element:<AddingUser/>
     }
 
 ]);
