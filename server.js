@@ -158,6 +158,50 @@ async function add(obj){
         await client.close();
     }
 }
+async function addCD(obj){
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        const db = client.db('RecordsDB');
+        const collection = db.collection('RecordsDB');
+        console.log(obj);
+        console.log(obj.id);
+        const newVinyl = {
+            _id: obj.id,  // Set a unique ID for the new object
+            Name: obj.release_title,
+            Artist: obj.artist,
+            Format: obj.format,
+            isRecommend: false,
+        };
+
+
+        const filter = {}; // Assuming you want to update the entire document
+        const key = `Music.CDs.${obj.id}`;
+        const update = {
+            $set: {
+                [key]: newVinyl,
+            },
+        };
+
+        // Use updateOne to update the specified field
+        const result = await collection.updateOne(filter, update);
+
+        console.log(`Document updated successfully. Matched ${result.matchedCount} document(s) and modified ${result.modifiedCount} document(s).`);
+
+        return true;
+    } catch (err) {
+        console.error('Error updating document', err);
+        return false;
+    }
+
+    finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
+    }
+}
 async function setAllFalse() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
@@ -354,7 +398,7 @@ app.post("/api/addVinyl",(req, res)=>{
 });
 app.post("/api/addCD",(req, res)=>{
     console.log(req.body.id);
-    const run=add(req.body).then((resp)=>{
+    const run=addCD(req.body).then((resp)=>{
         if(resp){
             res.status(200).json({ status: 'success'});
         }

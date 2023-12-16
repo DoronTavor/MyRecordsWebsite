@@ -15,7 +15,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {DOMAIN} from "../constants";
 import {PrimaryButton as PrimaryButtonBase} from "../components/misc/Buttons";
 
-const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
+const Container = tw(ContainerBase)`min-h-screen bg-yellow-500 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
 const MainContainer = tw.div`lg:w-1/2 xl:w-5/12 p-6 sm:p-12`;
 const LogoLink = tw.a``;
@@ -141,17 +141,17 @@ function Login(){
                   <span className="text">{submitButtonText}</span>
                 </SubmitButton>
               </Form>
-              <p tw="mt-6 text-xs text-gray-600 text-center">
-                <a href={forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">
-                  Forgot Password ?
-                </a>
-              </p>
-              <p tw="mt-8 text-sm text-gray-600 text-center">
-                Dont have an account?{" "}
-                <a href={signupUrl} tw="border-b border-gray-500 border-dotted">
-                  Sign Up
-                </a>
-              </p>
+              {/*<p tw="mt-6 text-xs text-gray-600 text-center">*/}
+              {/*  <a href={forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">*/}
+              {/*    Forgot Password ?*/}
+              {/*  </a>*/}
+              {/*</p>*/}
+              {/*<p tw="mt-8 text-sm text-gray-600 text-center">*/}
+              {/*  Dont have an account?{" "}*/}
+              {/*  <a href={signupUrl} tw="border-b border-gray-500 border-dotted">*/}
+              {/*    Sign Up*/}
+              {/*  </a>*/}
+              {/*</p>*/}
               {isSet &&(
                   <Link to= {newRoute} >
                     <Text>Move to Developer page</Text>

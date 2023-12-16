@@ -12,7 +12,9 @@ function allCds(keys){
             }
         })
             .then((res) => res.json())
-            .then((data) => MusicAlbum(data));
+            .then((data) => MusicAlbum(data)).catch((error)=>{
+                console.log(error);
+            });
     });
 
     return Promise.all(fetchPromises)
@@ -38,7 +40,9 @@ function allVinyls(keys){
             }
         })
             .then((res) => res.json())
-            .then((data) => MusicAlbum(data));
+            .then((data) => MusicAlbum(data)).catch((error)=>{
+                console.log(error);
+            });
     });
 
     return Promise.all(fetchPromises)
