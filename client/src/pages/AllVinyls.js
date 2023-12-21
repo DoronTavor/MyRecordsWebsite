@@ -139,7 +139,7 @@ function AllVinyls(){
                         <th>Format</th>
                         <th>Type</th>
                         <th>Genres</th>
-                        <th>Popularity</th>
+
 
                     </tr>
                     </thead>
@@ -147,6 +147,9 @@ function AllVinyls(){
                     {Object.values(musicObjects).map((card, key) => (
                         <tr key={key}>
                             <td><CardImage  style={{ width: '150px', height: '150px', objectFit: 'cover' }} imageSrc={card.Image} /></td>
+
+
+
                             <td><h3 style={{ textAlign: 'center' }}> {card.Name.split('=')[0]}</h3> </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.Year}</h3> </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.Artist.split('=')[0]}</h3> </td>

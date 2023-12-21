@@ -63,7 +63,7 @@ function setStringForSearching(object) {
     return queryString;
 }
 
-function AddingVinyl(){
+function AddingCDByID(){
     const [musicObjectToAdd,setMusicObjectToAdd]=useState({});
     const [musicObjectReturned,setMusicObjectReturned]=useState({});
     const [isRet,setIsRet]=useState(false);
@@ -77,24 +77,64 @@ function AddingVinyl(){
         setMusicObjectToAdd(updatedObject);
         console.log(musicObjectToAdd);
     }
-    function addRecord(obj){
-        console.log("AddRec met "+obj.id);
-        fetch(`${DOMAIN}/api/addVinyl`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(obj)
-        }).then(response  =>{
-            if(response.ok){
+    async function addRecord(obj) {
+        // Keep trying until obj is not undefined
+        while (obj === undefined) {
+            // Make sure to update obj if it can be changed by a background method
+
+
+            console.log("Waiting until its not undefined");
+
+            // Use async/await for better readability
+
+        }
+        try {
+            obj = makeWorkForHebrew(obj);
+            const response = await fetch(`${DOMAIN}/api/addCDByID`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            });
+
+            if (response.ok) {
                 alert("Added successfully");
                 setIsAdd(true);
                 setId(obj.id);
+                // Break the loop if added successfully
+
+            } else {
+                alert("Didn't add successfully");
             }
-            else {
-                alert("didnt Added successfully");
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred while adding the record");
+        }
+    }
+    function isHebrewString(str) {
+        // Use a regular expression to check if the string contains Hebrew characters
+        const hebrewRegex = /[\u0590-\u05FF]/;
+        return hebrewRegex.test(str);
+    }
+
+    function reverseHebrewString(str) {
+        // Reverse the string if it contains Hebrew characters
+        if (isHebrewString(str)) {
+            return str.split('').reverse().join('');
+        }
+        return str;
+    }
+
+    function makeWorkForHebrew(obj){
+        for(const key in obj){
+            const hebrewRegex = /[\u0590-\u05FF\s]/;
+
+            if(isHebrewString(obj[key])){
+                obj[key]=reverseHebrewString(obj[key]);
             }
-        })
+        }
+        return obj;
     }
     //${DOMAIN}
     function handleButtonClick() {
@@ -110,35 +150,15 @@ function AddingVinyl(){
             "pages":1
         };
         //setMusicObjectToAdd(demo);
+        musicObjectToAdd.isRecommend=false;
         const queryString = setStringForSearching(musicObjectToAdd);
         console.log(decodeURIComponent(queryString));
-        fetch(`/api/getAskedFromUser/${queryString}`)
-            .then((response) => {
-                if (response.status === 200) {
-                    return response.json(); // This returns a Promise
-                } else {
-                    throw new Error('Request failed with status ' + response.status);
-                }
-            })
-            .then((data) => {
-                console.log(data);
-                //Present the result
-                setMusicObjectReturned(data);
-                console.log("Release Title: " + data.release_title +
-                    "\nArtist: " + data.artist +
-                    "\nCountry: " + data.country +
-                    "\nLabel: " + data.label +
-                    "\nYear: " + data.year +
-                    "\nFormat: " + data.format+
-                    "\nID: "+data.id
 
-                );
-                setIsRet(true);
-                addRecord(data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        console.log("Before adding: "+musicObjectToAdd);
+        addRecord(musicObjectToAdd).then(r => {
+
+        });
+
     }
     let navLinks = [
         <NavLinks key={1}>
@@ -155,48 +175,36 @@ function AddingVinyl(){
             <Heading> Add Vinyl</Heading>
             {isAdd &&<Link to= {`/Details/${id}`} />}
             {/*{isRet &&<Modal musicObject={musicObjectReturned} open={isRet}/>}*/}
-            <h3>Title</h3>
+            <h3>ID</h3>
             <input
                 type="text"
-                name="release_title"
+                name="_id"
+                value={musicObjectToAdd.id}
+                onChange={handleInputChange}
+            />
+            <h3>Name</h3>
+            <input
+                type="text"
+                name="Name"
                 value={musicObjectToAdd.release_title}
                 onChange={handleInputChange}
             />
             <h3>Artist</h3>
             <input
                 type="text"
-                name="artist"
+                name="Artist"
                 value={musicObjectToAdd.artist}
-                onChange={handleInputChange}
-            />
-            <h3>Label</h3>
-            <input
-                type="text"
-                name="label"
-                value={musicObjectToAdd.label}
-                onChange={handleInputChange}
-            />
-            <h3>Country</h3>
-            <input
-                type="text"
-                name="country"
-                value={musicObjectToAdd.country}
-                onChange={handleInputChange}
-            />
-            <h3>Year</h3>
-            <input
-                type="text"
-                name="year"
-                value={musicObjectToAdd.year}
                 onChange={handleInputChange}
             />
             <h3>Format</h3>
             <input
                 type="text"
-                name="format"
+                name="Format"
                 value={musicObjectToAdd.format}
                 onChange={handleInputChange}
             />
+
+
             <button onClick={handleButtonClick}>find the record</button>
 
             <Footer />
@@ -204,4 +212,4 @@ function AddingVinyl(){
 
     );
 }
-export default AddingVinyl;
+export default AddingCDByID;

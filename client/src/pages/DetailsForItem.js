@@ -32,12 +32,12 @@ const ControlButton = styled(PrimaryButtonBase)`
   svg {
     ${tw`w-6 h-6`}
   }
-`;
-const PrimaryButton = tw(PrimaryButtonBase)`
+`;const PrimaryButton = tw(PrimaryButtonBase)`
   mt-auto 
   sm:text-lg
-  w-32 h-32 // Adjust the width and height for a square button
-  py-2 px-4  // Adjust the padding to make it smaller
+  w-auto // Set width to auto to adjust based on content
+  h-10   // Adjust height to a suitable value
+  py-2 px-4 // Adjust padding to make it smaller
 `;
 
 const port =3005;

@@ -118,8 +118,14 @@ function DeveloperPage(){
                <Link to="/AddVinyl">
                    <Text>Add Vinyl</Text>
                </Link>
+               <Link to="/AddVinylById">
+                   <Text>Add Vinyl By ID</Text>
+               </Link>
                <Link to="/AddCD">
                    <Text>Add Cd</Text>
+               </Link>
+               <Link to="/AddCDById">
+                   <Text>Add Cd By ID</Text>
                </Link>
                <Link to="/AddingUser">
                    <Text>Add User</Text>

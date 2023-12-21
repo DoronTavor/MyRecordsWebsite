@@ -1,8 +1,11 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading } from "components/misc/Headings.js";
+import {DOMAIN} from "../../constants";
+import {Link} from "react-router-dom";
+import {PrimaryButton as PrimaryButtonBase} from "../misc/Buttons";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -21,7 +24,7 @@ const TextContent = tw.div`lg:py-8`;
 
 const Heading = tw(SectionHeading)`text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 const Description = tw.p`text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100 mt-4`
-
+const Text = tw(PrimaryButtonBase)`w-full mt-8`;
 const Statistics = tw.div`mt-6 lg:mt-8 xl:mt-16 flex flex-wrap`
 const Statistic = tw.div`text-lg sm:text-2xl lg:text-3xl w-1/2 mt-4 lg:mt-10 text-center md:text-left`
 const Value = tw.div`font-bold text-primary-500`
@@ -30,16 +33,28 @@ const Key = tw.div`font-medium text-gray-700`
 export default ({textOnLeft = false}) => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   //Change the statistics variable as you like, add or delete objects
-  const statistics = [
-    {
-      key: "CD",
-      value:"22" ,
-    },
-    {
-      key: "Vinyl's",
-      value: "2",
-    }
-  ]
+  // const [cdCount,setCdCount]=useState(0);
+  // const [vinylCount,setVinylCount]=useState(0);
+  // useEffect(()=>{
+  //   fetch(`${DOMAIN}/api/returnAmount`).then((response) => response.json())
+  //     .then((data) =>{
+  //       setCdCount(data.Cds);
+  //       setVinylCount(data.Vinyls);
+  //     })
+  //      .catch((error) => console.error(error));
+  //
+  // },[cdCount,vinylCount]);
+  //
+  // const statistics = [
+  //   {
+  //     key: "CD",
+  //     value:cdCount ,
+  //   },
+  //   {
+  //     key: "Vinyl's",
+  //     value: vinylCount,
+  //   }
+  // ];
 
   return (
     <Container>
@@ -49,16 +64,18 @@ export default ({textOnLeft = false}) => {
         </ImageColumn>
         <TextColumn textOnLeft={textOnLeft}>
           <TextContent>
-            <Heading>We have the best Record's and CD's.</Heading>
-            <Description>In Hebrew and in English, all the best records we have</Description>
-            <Statistics>
-              {statistics.map((statistic, index) => (
-              <Statistic key={index}>
-                <Value>{statistic.value}</Value>
-                <Key>{statistic.key}</Key>
-              </Statistic>
-              ))}
-            </Statistics>
+            <Heading>Please Join to my journey to the music world</Heading>
+            <Description>Look at my Cds and my Vinyls, and by that explore my music world and learn about the music i love</Description>
+            <Link to={"https://en.wikipedia.org/wiki/Phonograph_record"}>  <Text>What is Vinyl</Text></Link>
+            <Link to={"https://en.wikipedia.org/wiki/Compact_disc"}> <Text>What is CD</Text></Link>
+            {/*<Statistics>*/}
+            {/*  {statistics.map((statistic, index) => (*/}
+            {/*  <Statistic key={index}>*/}
+            {/*    <Value>{statistic.value}</Value>*/}
+            {/*    <Key>{statistic.key}</Key>*/}
+            {/*  </Statistic>*/}
+            {/*  ))}*/}
+            {/*</Statistics>*/}
           </TextContent>
         </TextColumn>
       </TwoColumn>

@@ -40,10 +40,9 @@ export default () => {
           </LogoContainer>
           <LinksContainer>
             <Link href="#">Home</Link>
-            <Link href="#">CD's</Link>
-            <Link href="#">Vinyl's</Link>
-            <Link href="#">Add CD's</Link>
-            <Link href="#">Add vinyl's</Link>
+            <Link href="/allCds">CD's</Link>
+            <Link href="/allVinyls">Vinyl's</Link>
+
           </LinksContainer>
           <CopyrightText>
             &copy; Copyright 2023, Tavor Doron. All Rights Reserved.

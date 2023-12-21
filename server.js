@@ -55,6 +55,40 @@ async function run() {
         await client.close();
     }
 }
+async function returnAmount() {
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        const db = client.db('RecordsDB');
+        const collection = db.collection('RecordsDB');
+
+        // Query the collection and fetch all documents
+        const records = await collection.find().toArray();
+        const music=records[0].Music;
+        const Cds=music.CDs;
+        const Vinyls=music.Vinyls;
+        // const cdCount=(Object.keys(Cds)).length;
+        // const vinylCount=(Object.keys(Vinyls)).length;
+        const vinylsKeys = Object.keys(Vinyls);
+        const amountOfVinyls = vinylsKeys.length;
+        const CdsKeys = Object.keys(Cds);
+        const amountOfCds = CdsKeys.length;
+        console.log("HEY METHOD");
+        console.log("CDS: "+amountOfCds);
+        console.log("Vinyls: "+amountOfVinyls);
+        return {
+            Cds:{amountOfCds},
+            Vinyls:{amountOfVinyls}
+        };
+
+    } finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
+    }
+}
 async function addUser(obj){
     try {
         // Connect the client to the server	(optional starting in v4.7)
@@ -114,7 +148,103 @@ async function addUser(obj){
         await client.close();
     }
 }
+async function addVinylByID(obj){
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        const db = client.db('RecordsDB');
+        const collection = db.collection('RecordsDB');
+        console.log("the obj add: ");
+        console.log(obj);
+        console.log(obj._id);
+        const newVinyl = {
+            _id: obj.id,  // Set a unique ID for the new object
+            Name: obj.release_title,
+            Artist: obj.artist,
+            Format: obj.format,
+            isRecommend: false,
+        };
+        console.log(newVinyl);
+
+
+        const filter = {}; // Assuming you want to update the entire document
+        const key = `Music.Vinyls.${obj._id}`;
+        console.log("The key: "+key);
+        const update = {
+            $set: {
+                [key]: obj,
+            },
+        };
+
+        // Use updateOne to update the specified field
+        const result = await collection.updateOne(filter, update);
+        console.log(result);
+
+        console.log(`Document updated successfully. Matched ${result.matchedCount} document(s) and modified ${result.modifiedCount} document(s).`);
+
+        return true;
+    } catch (err) {
+        console.error('Error updating document', err);
+        return false;
+    }
+
+    finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
+    }
+}
 async function add(obj){
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        const db = client.db('RecordsDB');
+        const collection = db.collection('RecordsDB');
+        console.log("the obj add: ");
+        console.log(obj);
+        console.log(obj._id);
+        const newVinyl = {
+            _id: obj.id,  // Set a unique ID for the new object
+            Name: obj.release_title,
+            Artist: obj.artist,
+            Format: obj.format,
+            isRecommend: false,
+        };
+        console.log(newVinyl);
+
+
+        const filter = {}; // Assuming you want to update the entire document
+        const key = `Music.Vinyls.${obj._id}`;
+        console.log("The key: "+key);
+        const update = {
+            $set: {
+                [key]: newVinyl,
+            },
+        };
+
+        // Use updateOne to update the specified field
+        const result = await collection.updateOne(filter, update);
+        console.log(result);
+
+        console.log(`Document updated successfully. Matched ${result.matchedCount} document(s) and modified ${result.modifiedCount} document(s).`);
+
+        return true;
+    } catch (err) {
+        console.error('Error updating document', err);
+        return false;
+    }
+
+    finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
+    }
+}
+async function addCDByID(obj){
     try {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
@@ -125,20 +255,23 @@ async function add(obj){
         const collection = db.collection('RecordsDB');
         console.log(obj);
         console.log(obj.id);
-        const newVinyl = {
+
+        let newVinyl = {
             _id: obj.id,  // Set a unique ID for the new object
             Name: obj.release_title,
             Artist: obj.artist,
             Format: obj.format,
             isRecommend: false,
         };
+        newVinyl=makeWorkForHebrew(newVinyl);
+        console.log(newVinyl);
 
 
         const filter = {}; // Assuming you want to update the entire document
-        const key = `Music.Vinyls.${obj.id}`;
+        const key = `Music.CDs.${obj._id}`;
         const update = {
             $set: {
-                [key]: newVinyl,
+                [key]: obj,
             },
         };
 
@@ -169,13 +302,16 @@ async function addCD(obj){
         const collection = db.collection('RecordsDB');
         console.log(obj);
         console.log(obj.id);
-        const newVinyl = {
+
+        let newVinyl = {
             _id: obj.id,  // Set a unique ID for the new object
             Name: obj.release_title,
             Artist: obj.artist,
             Format: obj.format,
             isRecommend: false,
         };
+        newVinyl=makeWorkForHebrew(newVinyl);
+        console.log(newVinyl);
 
 
         const filter = {}; // Assuming you want to update the entire document
@@ -355,6 +491,13 @@ async function findName(email) {
         await client.close();
     }
 }
+
+app.get("/api/returnAmount",(req,res)=>{
+    const result=returnAmount().then((amount)=>{
+        console.log("HEY");
+        res.send(amount);
+    });
+});
 app.get("/api/users/getName/:email",(req, res)=>{
     let email=req.params.email;
     const run=findName(email).then((name)=>{
@@ -384,9 +527,22 @@ app.post("/api/users/addUser",(req, res)=>{
 //         });
 //     }
 // ));
+app.post("/api/addVinylByID",(req, res)=>{
+    console.log("the body ");
+    console.log(req.body);
+    const run=addVinylByID(req.body).then((resp)=>{
+        if(resp){
+            res.status(200).json({ status: 'success'});
+        }
+        else{
+            res.status(500).json({ status: 'fail'});
+        }
+    });
+});
 
 app.post("/api/addVinyl",(req, res)=>{
-    console.log(req.body.id);
+    console.log("the body ");
+    console.log(req.body);
     const run=add(req.body).then((resp)=>{
         if(resp){
             res.status(200).json({ status: 'success'});
@@ -399,6 +555,17 @@ app.post("/api/addVinyl",(req, res)=>{
 app.post("/api/addCD",(req, res)=>{
     console.log(req.body.id);
     const run=addCD(req.body).then((resp)=>{
+        if(resp){
+            res.status(200).json({ status: 'success'});
+        }
+        else{
+            res.status(500).json({ status: 'fail'});
+        }
+    });
+});
+app.post("/api/addCDByID",(req, res)=>{
+    console.log(req.body.id);
+    const run=addCDByID(req.body).then((resp)=>{
         if(resp){
             res.status(200).json({ status: 'success'});
         }
@@ -534,7 +701,10 @@ app.get("/api/getAskedFromUser/:musicString",(req, res)=>{
     console.log(string);
     //console.log(object);
     findAsked(string).then((result)=>{
-        console.log("THE RES: "+ result["id"]);
+        console.log(result);
+        res.send(result);
+
+        // console.log("THE RES: "+ result["id"]);
         console.log("Release Title: " + result.release_title +
             "\nArtist: " + result.artist +
             "\nCountry: " + result.country +
@@ -545,7 +715,15 @@ app.get("/api/getAskedFromUser/:musicString",(req, res)=>{
 
         );
         console.log("The res: "+result);
-        res.send(result);
+        // res.send(result);
+        // if(result["results"].length>1){
+        //
+        //     res.send(result["results"][0]);
+        // }
+        // else{
+        //     res.send(result);
+        // }
+
     });
 });
 
@@ -568,6 +746,30 @@ function queryStringToObject(queryString) {
 
     return obj;
 }
+function isHebrewString(str) {
+    // Use a regular expression to check if the string contains Hebrew characters
+    const hebrewRegex = /[\u0590-\u05FF]/;
+    return hebrewRegex.test(str);
+}
+
+function reverseHebrewString(str) {
+    // Reverse the string if it contains Hebrew characters
+    if (isHebrewString(str)) {
+        return str.split('').reverse().join('');
+    }
+    return str;
+}
+
+function makeWorkForHebrew(obj){
+    for(const key in obj){
+        const hebrewRegex = /[\u0590-\u05FF\s]/;
+
+        if(isHebrewString(obj[key])){
+            obj[key]=reverseHebrewString(obj[key]);
+        }
+    }
+    return obj;
+}
 
 function returnRecomended(cds,vinyls){
     let ret=[];
@@ -583,5 +785,4 @@ function returnRecomended(cds,vinyls){
     }
     return ret;
 }
-
 

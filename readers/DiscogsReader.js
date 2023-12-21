@@ -80,9 +80,13 @@ function asked(key){
 }
 function findAsked(string){
     // console.log(string.replaceAll("+","&"));
-    const object= parseQueryString(string.replaceAll("+","&").replace(/\s+/g, ' '));
-    console.log("The obj")
+    let object= parseQueryString(string.replaceAll("+","&").replace(/\s+/g, ' '));
+    console.log("The obj");
+    object=makeWorkForHebrew(object);
     console.log(object);
+
+
+
     return fetch(`https://api.discogs.com/database/search?q=${object.q}&type=${object.type}&release_title=${object.release_title}
     &artist=${object.artist}&label=${object.label}&country=${object.country}&year=${object.year}&format=${object.format}&per_page=${object.per_page}&pages=${object.pages}`, {
         method: 'GET',
@@ -97,11 +101,43 @@ function findAsked(string){
             // console.log(res.json());
             return res.json();
         })
-        .then((data) => setObjectForAsked(data))
+        .then((data) =>
+        {
+
+            setObjectForAsked(data);
+            console.log("the data ");
+            console.log(data);
+        }
+    )
         .catch((error) => {
             console.error("Error fetching data:", error);
             return {};
         });
+}
+
+function isHebrewString(str) {
+    // Use a regular expression to check if the string contains Hebrew characters
+    const hebrewRegex = /[\u0590-\u05FF]/;
+    return hebrewRegex.test(str);
+}
+
+function reverseHebrewString(str) {
+    // Reverse the string if it contains Hebrew characters
+    if (isHebrewString(str)) {
+        return str.split('').reverse().join('');
+    }
+    return str;
+}
+
+function makeWorkForHebrew(obj){
+    for(const key in obj){
+        const hebrewRegex = /[\u0590-\u05FF\s]/;
+
+        if(isHebrewString(obj[key])){
+            obj[key]=reverseHebrewString(obj[key]);
+        }
+    }
+    return obj;
 }
 function parseQueryString(queryString) {
     // Remove the leading '?' if present

@@ -78,7 +78,7 @@ function AddingCD(){
         console.log(musicObjectToAdd);
     }
     function addRecord(obj){
-        console.log("AddRec met "+obj.id);
+        console.log("AddRec met "+obj);
         fetch(`/api/addCD`, {
             method: "POST",
             headers: {
