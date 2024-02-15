@@ -6,7 +6,7 @@ function MusicAlbum(data){
         Artist:data["artists"][0].name,
         Format:data["formats"][0].name,
         Year:data["year"],
-        TrackList:data["tracklist"],
+        TrackList:setAsJson(data["tracklist"]),
         Image:data["images"][0].resource_url,
         uri:data["uri"],
         label:data["labels"][0].name,
@@ -16,12 +16,19 @@ function MusicAlbum(data){
     };
 
 }
-function setType(array){
+    function setType(array){
     if(array.length>=2){
         return array[(array.length-2)]+" "+array[(array.length-1)];
     }
     return array[(array.length)-1];
 
+}
+function setAsJson(array){
+    let jsonObj= {};
+    for (var i = 0; i<array.length; i++) {
+        jsonObj[i+1] = array[i];
+    }
+    return JSON.stringify(jsonObj);
 }
 module.exports = MusicAlbum; // Export the class
 

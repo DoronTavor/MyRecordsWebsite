@@ -131,6 +131,7 @@ function DetailsForItem(){
              })
              .then((data) => {
                  console.log(data);
+
                  setMusicObject(data);
 
 
@@ -170,7 +171,7 @@ function DetailsForItem(){
             <Title name={musicObject.Name.split('=')[0]} artist={musicObject.Artist}
                    year={musicObject.Year} format={musicObject.Format} label={musicObject.label} country={musicObject.country} type={musicObject.type}
                    genres={musicObject.genres}/>
-            <TrackList TrackList={musicObject.TrackList}></TrackList>
+            <TrackList TrackList={jsonToArrayWithoutKeys(musicObject.TrackList)}></TrackList>
             <PrimaryButton data-link={musicObject.uri} onClick={handleClickMoreDetails}>  Explore more on Discogs</PrimaryButton>
 
 
@@ -178,4 +179,24 @@ function DetailsForItem(){
         </AnimationRevealPage>
     );
 }
+function jsonToArrayWithoutKeys(jsonString) {
+    // Parse the JSON string into a JavaScript object
+    const jsonObject = JSON.parse(jsonString);
+
+    // Create an array to store the values without keys
+    const resultArray = [];
+
+    // Iterate over the properties of the JSON object
+    for (const key in jsonObject) {
+        if (jsonObject.hasOwnProperty(key)) {
+            // Push the property value (object) to the array
+            resultArray.push(jsonObject[key]);
+        }
+    }
+    console.log(resultArray);
+
+    // Return the resulting array
+    return resultArray;
+}
+
 export default DetailsForItem;

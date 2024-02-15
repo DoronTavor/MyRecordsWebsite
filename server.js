@@ -4,7 +4,7 @@ const { MongoClient, ServerApiVersion, ObjectId} = require('mongodb');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const express= require('express');
-
+const MySQLReader= require("./MySQLReader.js");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 require('dotenv').config();
@@ -17,7 +17,7 @@ const app = express();
 
 
 app.use(express.json());
-
+MySQLReader.createTables();
 const buildFolderPath = path.join(__dirname,'client','build');
 app.use(express.static(buildFolderPath));
 
@@ -35,6 +35,7 @@ const client = new MongoClient(process.env.uri, {
 
 async function run() {
     try {
+
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
         // Send a ping to confirm a successful connection
@@ -585,9 +586,22 @@ app.get('/api/cd/all',(req,res)=>{
     const result= run().then((records)=>{
         const music=records;
         const Cds=music.CDs;
-        allCds(Object.keys(Cds)).then((data)=>{
-            res.send(data);
+        const keys= Object.keys(Cds);
+        keys.forEach((key)=>{
+            MySQLReader.checkRecordExists(key,(exist)=>{
+                if(!exist){
+                    asked(key).then((cd)=>{
+                        MySQLReader.insertCD(cd);
+                    });
+                }
+            });
         })
+        MySQLReader.fetchCDs((cds)=>{
+            res.send(cds);
+        });
+        // allCds(Object.keys(Cds)).then((data)=>{
+        //     res.send(data);
+        // })
 
     });
 
@@ -596,9 +610,23 @@ app.get('/api/vinyl/all',(req, res)=>{
     const result= run().then((records)=>{
         const music=records;
         const Vinyls=music.Vinyls;
-        allVinyls(Object.keys(Vinyls)).then((data)=>{
-            res.send(data);
+        const keys= Object.keys(Vinyls);
+        keys.forEach((key)=>{
+            MySQLReader.checkRecordExists(key,(exist)=>{
+                if(!exist){
+                    asked(key).then((vinyl)=>{
+                        MySQLReader.insertVinyl(vinyl);
+                    });
+                }
+            });
         })
+        MySQLReader.fetchVinyls((vinyls)=>{
+            res.send(vinyls);
+        });
+
+        // allVinyls(Object.keys(Vinyls)).then((data)=>{
+        //     res.send(data);
+        // })
     });
 });
 app.get('/api/all',(req, res)=>{
@@ -613,9 +641,13 @@ app.get('/api/all',(req, res)=>{
 app.get('/api/asked/:id',(req, res)=>{
     // the key is passed int the request
     const key= req.params.id;
-    asked(key).then((result)=>{
+    // asked(key).then((result)=>{
+    //     res.send(result);
+    // });
+    MySQLReader.fetchRecordById(key,(result)=>{
         res.send(result);
     });
+
 });
 // app.get('/api/isrecommend/:type/:id',(req, res)=>{
 //     const type=req.params.type;
@@ -647,9 +679,63 @@ app.get('/api/recommend',(req, res)=>{
             5882830:Vinyls[5882830]
         }
         const keys=returnRecomended(Cds,Vinyls);
-        recommend(keys).then((result)=>{
-            res.send(result);
+        console.log(keys);
+        keys.forEach(key=>{
+            MySQLReader.checkRecordExists(key,(exist)=>{
+                if (!exist){
+                    // console.log(key);
+                    asked(key).then((card)=>{
+                        console.log(card);
+                        if (card.Format.includes("Vinyl") ||card.Format.includes("LP")  ) {
+                            MySQLReader.insertVinyl(card); // Call insertVinyl without checking its return value
+
+
+                            // No need to check the return value here
+                        }
+                        if (card.Format.includes("CD")) {
+                            MySQLReader.insertCD(card); // Call insertVinyl without checking its return value
+
+                            // No need to check the return value here
+                        }
+                    });
+
+                }
+            });
         });
+
+        // MySQLReader.fetchRecordById(keys[1],(value)=>{
+        //     console.log(value);
+        // });
+
+        MySQLReader.fetchFavorites(keys,(result)=>{
+            console.log(result);
+            res.send(result);
+        })
+
+
+        // recommend(keys).then((result)=>{
+        //     Object.values(result).map((card, key) => {
+        //         if (card.Format==="Vinyl"){
+        //             MySQLReader.returnIfExist(key,(exist)=>{
+        //                 if (exist !== "NONE"){
+        //                     MySQLReader.insertVinyl(card);
+        //                     console.log("ADD");
+        //                 }
+        //             });
+        //         }
+        //         if (card.Format==="CD"){
+        //             MySQLReader.returnIfExist(key,(exist)=>{
+        //                 if (exist !== "NONE"){
+        //                     MySQLReader.insertCD(card);
+        //                 }
+        //             });
+        //
+        //         }
+        //     });
+        //
+        //     res.send(result);
+        //
+        // });
 
         //res.send(rets);
     });
