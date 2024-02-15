@@ -148,7 +148,9 @@ function AllCds(){
                             <td><CardImage  style={{ width: '150px', height: '150px', objectFit: 'cover' }} imageSrc={card.Image} /></td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.Name.split('=')[0]}</h3> </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.Year}</h3> </td>
-                            <td><h3 style={{ textAlign: 'center' }}> {card.Artist}</h3> </td>
+                            <td>
+                                <Link to={`/ByArtist/${card.Artist.split('=')[0]}`}>{card.Artist.split('=')[0]}</Link>
+                            </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.Format}</h3> </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.type}</h3> </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.genres}</h3> </td>

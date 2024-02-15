@@ -779,6 +779,12 @@ app.post('/api/users/login',(req, res)=>{
     });
 
 });
+app.get("/api/byArtist/:artist",(req,res)=>{
+    const artist= req.params.artist;
+    MySQLReader.fetchByArtist((artist),(result)=>{
+        res.send(result);
+    });
+});
 
 
 app.get("/api/getAskedFromUser/:musicString",(req, res)=>{
@@ -791,15 +797,15 @@ app.get("/api/getAskedFromUser/:musicString",(req, res)=>{
         res.send(result);
 
         // console.log("THE RES: "+ result["id"]);
-        console.log("Release Title: " + result.release_title +
-            "\nArtist: " + result.artist +
-            "\nCountry: " + result.country +
-            "\nLabel: " + result.label +
-            "\nYear: " + result.year +
-            "\nFormat: " + result.format
-            +"\nID: "+result.id
-
-        );
+        // console.log("Release Title: " + result.release_title +
+        //     "\nArtist: " + result.artist +
+        //     "\nCountry: " + result.country +
+        //     "\nLabel: " + result.label +
+        //     "\nYear: " + result.year +
+        //     "\nFormat: " + result.format
+        //     +"\nID: "+result.id
+        //
+        // );
         console.log("The res: "+result);
         // res.send(result);
         // if(result["results"].length>1){

@@ -173,6 +173,31 @@ function fetchFavorites(keys,callback) {
         });
     });
 }
+function fetchByArtist(artist,callback) {
+    const cdsQuery = 'SELECT * FROM cds WHERE Artist = ?';
+    const vinylsQuery = 'SELECT * FROM vinyls WHERE Artist = ?';
+
+
+
+    connection.query(cdsQuery, artist, (err, cdsRows) => {
+        if (err) {
+            console.error('Error fetching records from cds table:', err);
+            callback([]);
+            return;
+        }
+
+        connection.query(vinylsQuery, artist, (err, vinylsRows) => {
+            if (err) {
+                console.error('Error fetching records from vinyls table:', err);
+                callback([]);
+                return;
+            }
+
+            const allRecords = [...cdsRows, ...vinylsRows];
+            callback(allRecords);
+        });
+    });
+}
 
 function fetchRecordById(recordId, callback) {
     const cdsQuery = 'SELECT * FROM cds WHERE _id = ?';
@@ -238,5 +263,5 @@ function checkRecordExists(recordId, callback) {
 }
 
 module.exports = {
-    insertVinyl, insertCD,createTables,fetchFavorites,checkRecordExists,fetchRecordById,fetchVinyls,fetchCDs
+    insertVinyl, insertCD,createTables,fetchFavorites,checkRecordExists,fetchRecordById,fetchVinyls,fetchCDs,fetchByArtist
 };

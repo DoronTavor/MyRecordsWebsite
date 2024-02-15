@@ -17,6 +17,7 @@ import AddingCD from "./pages/AddingCD";
 import AddingUser from "./pages/AddingUser";
 import AddingVinylByID from "./pages/AddingVinylByID";
 import AddingCDByID from "./pages/AddingCDByID";
+import ByArtist from "./pages/ByArtist";
 Modal.setAppElement("#root");
 const router= createBrowserRouter([{
     path:"/",
@@ -65,6 +66,10 @@ const router= createBrowserRouter([{
     {
         path:"/AddingUser",
         element:<AddingUser/>
+    },
+    {
+        path:"/ByArtist/:artist",
+        element:<ByArtist/>
     }
 
 ]);
