@@ -18,6 +18,7 @@ import AddingUser from "./pages/AddingUser";
 import AddingVinylByID from "./pages/AddingVinylByID";
 import AddingCDByID from "./pages/AddingCDByID";
 import ByArtist from "./pages/ByArtist";
+import ByYear from "./pages/ByYear";
 Modal.setAppElement("#root");
 const router= createBrowserRouter([{
     path:"/",
@@ -70,6 +71,10 @@ const router= createBrowserRouter([{
     {
         path:"/ByArtist/:artist",
         element:<ByArtist/>
+    },
+    {
+        path:"/ByYear/:year",
+        element:<ByYear/>
     }
 
 ]);

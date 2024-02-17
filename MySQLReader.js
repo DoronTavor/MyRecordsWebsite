@@ -1,4 +1,5 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
+require('dotenv').config();
 let connection;
 // Create MySQL connection
 // if(process.env.PORT === 3005){
@@ -17,13 +18,20 @@ let connection;
 //         database: process.env.DB_NAME
 //     });
 // }
+// connection = mysql.createConnection({
+//        host: "localhost",
+//        port: 3307,
+//        user: "root",
+//        password: "Tavor20043!",
+//        database: "records_app"
+//    });
 connection = mysql.createConnection({
-       host: "localhost",
-       port: 3307,
-       user: "root",
-       password: "Tavor20043!",
-       database: "records_app"
-   });
+       host: "mysql-recordsdb-tavor-3504.a.aivencloud.com",
+       port: 20801,
+        user: "avnadmin",
+        password: process.env.DBPASSWORD,
+       database: "defaultdb"
+    });
 // Connect to MySQL
 
 connection.connect((err) => {
@@ -173,6 +181,31 @@ function fetchFavorites(keys,callback) {
         });
     });
 }
+function fetchByYear(year,callback) {
+    const cdsQuery = 'SELECT * FROM cds WHERE year = ?';
+    const vinylsQuery = 'SELECT * FROM vinyls WHERE year = ?';
+
+
+
+    connection.query(cdsQuery, year, (err, cdsRows) => {
+        if (err) {
+            console.error('Error fetching records from cds table:', err);
+            callback([]);
+            return;
+        }
+
+        connection.query(vinylsQuery, year, (err, vinylsRows) => {
+            if (err) {
+                console.error('Error fetching records from vinyls table:', err);
+                callback([]);
+                return;
+            }
+
+            const allRecords = [...cdsRows, ...vinylsRows];
+            callback(allRecords);
+        });
+    });
+}
 function fetchByArtist(artist,callback) {
     const cdsQuery = 'SELECT * FROM cds WHERE Artist = ?';
     const vinylsQuery = 'SELECT * FROM vinyls WHERE Artist = ?';
@@ -263,5 +296,5 @@ function checkRecordExists(recordId, callback) {
 }
 
 module.exports = {
-    insertVinyl, insertCD,createTables,fetchFavorites,checkRecordExists,fetchRecordById,fetchVinyls,fetchCDs,fetchByArtist
+    insertVinyl, insertCD,createTables,fetchFavorites,checkRecordExists,fetchRecordById,fetchVinyls,fetchCDs,fetchByArtist,fetchByYear
 };

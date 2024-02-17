@@ -81,13 +81,13 @@ const handleClickMoreDetails=(event)=>{
         // For example, you can perform a state update or any other logic you need.
     }
 };
-function AllVinyls(){
-    const {id}=useParams();
+function ByYear(){
+    const {year}=useParams();
     const [musicObjects,setMusicObjects] = useState();
 
 
     useEffect(()=> {
-        fetch(`${DOMAIN}/api/vinyl/all`)
+        fetch(`${DOMAIN}/api/byYear/${year}`)
             .then((response) => {
                 if (response.status === 200) {
                     return response.json(); // This returns a Promise
@@ -108,7 +108,7 @@ function AllVinyls(){
         return ()=>{
             console.log('AllVinyls unmount')
         }
-    },[id]);
+    });
 
 
 
@@ -151,16 +151,10 @@ function AllVinyls(){
 
 
                             <td><h3 style={{ textAlign: 'center' }}> {card.Name.split('=')[0]}</h3> </td>
-                            <td>
-                                <Link to={`/ByYear/${card.Year}`}>{card.Year}</Link>
-                            </td>
-                            <td>
-                                <Link to={`/ByArtist/${card.Artist.split('=')[0]}`}>{card.Artist.split('=')[0]}</Link>
-                            </td>
-                            {/*<td><h3 style={{ textAlign: 'center' }}> {card.Artist.split('=')[0]}</h3> </td>*/}
+                            <td><h3 style={{ textAlign: 'center' }}> {card.Year}</h3> </td>
+                            <td><h3 style={{ textAlign: 'center' }}> {card.Artist.split('=')[0]}</h3> </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.Format}</h3> </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.type}</h3> </td>
-                            <td><h3 style={{ textAlign: 'center' }}> {card.genres}</h3> </td>
                             <td>
                                 <Link to={`/Details/${card._id}`}>More Details</Link>
                             </td>
@@ -174,4 +168,4 @@ function AllVinyls(){
         </AnimationRevealPage>
     );
 }
-export default AllVinyls;
+export default ByYear;

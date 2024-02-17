@@ -785,6 +785,12 @@ app.get("/api/byArtist/:artist",(req,res)=>{
         res.send(result);
     });
 });
+app.get("/api/byYear/:year",(req,res)=>{
+    const year= req.params.year;
+    MySQLReader.fetchByYear((year),(result)=>{
+        res.send(result);
+    });
+});
 
 
 app.get("/api/getAskedFromUser/:musicString",(req, res)=>{
