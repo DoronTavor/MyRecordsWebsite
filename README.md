@@ -22,8 +22,8 @@ To get started with the Records Website, simply clone this repository to your lo
 git clone https://github.com/DoronTavor/MyRecordsWebsite
 cd MyRecordsWebsite
 ```
-## Comments
+Or you can look at the deployed website at the address **https://myrecordswebsitebackend.onrender.com/**. Feel free to look and use it.
 
-- **The website**: The link of the website is https://myrecordswebsitebackend.onrender.com/. Feel free to look at the website
+## Comments
 - **Quesitons about the website**- If you have any problems with the website,or if you want to know more about the website, feel free to write me here about it, and i will help you as much as i could.
 -  **Thank you for using my website and i hope that you will know more about my records collection!!!**
