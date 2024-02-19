@@ -172,7 +172,7 @@ function AddingCDByID(){
     return (
         <AnimationRevealPage>
             <StyledHeader links={navLinks} collapseBreakpointClass="sm" />
-            <Heading> Add Vinyl</Heading>
+            <Heading> Add CD</Heading>
             {isAdd &&<Link to= {`/Details/${id}`} />}
             {/*{isRet &&<Modal musicObject={musicObjectReturned} open={isRet}/>}*/}
             <h3>ID</h3>
