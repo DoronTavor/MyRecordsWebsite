@@ -179,24 +179,18 @@ function DetailsForItem(){
         </AnimationRevealPage>
     );
 }
-function jsonToArrayWithoutKeys(jsonString) {
+function jsonToArrayWithoutKeys(data) {
     // Parse the JSON string into a JavaScript object
-    const jsonObject = JSON.parse(jsonString);
-
-    // Create an array to store the values without keys
-    const resultArray = [];
-
-    // Iterate over the properties of the JSON object
-    for (const key in jsonObject) {
-        if (jsonObject.hasOwnProperty(key)) {
-            // Push the property value (object) to the array
-            resultArray.push(jsonObject[key]);
+    var tracksArray = [];
+    for (const key in data) {
+        if (Object.hasOwnProperty.call(data, key)) {
+            tracksArray.push(data[key]);
         }
     }
-    console.log(resultArray);
+
 
     // Return the resulting array
-    return resultArray;
+    return tracksArray;
 }
 
 export default DetailsForItem;
