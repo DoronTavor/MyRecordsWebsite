@@ -20,3 +20,4 @@ npm-debug.log*
 config
 **/desktop.ini
 \.git\refs\heads
+.ini

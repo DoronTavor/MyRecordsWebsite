@@ -10,7 +10,7 @@ function title(props){
             <h2 className={"centeredArtist"}> Label:{"  "} {props.label}</h2>
             <h2 className={"centeredCountry"}> Country:{"  "} {props.country} </h2>
             <h2 className={"centeredType"}> Type: {"  "}{props.type}</h2>
-            <h2 className={"centeredGenres"}> Genres:{"  "} {props.genres}</h2>
+
         </div>
     );
 }

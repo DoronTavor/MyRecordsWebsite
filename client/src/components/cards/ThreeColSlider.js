@@ -189,7 +189,7 @@ export default (props) => {
                 <IconWithText>
                   <IconContainer>
                   </IconContainer>
-                  <Text>{card.genres}</Text>
+                  <Text>{card.country}</Text>
                 </IconWithText>
               </TextInfo>
               <Link to= {`/Details/${card._id}`} >
