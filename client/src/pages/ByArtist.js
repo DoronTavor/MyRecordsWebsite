@@ -138,7 +138,7 @@ function ByArtist(){
                         <th>Artist</th>
                         <th>Format</th>
                         <th>Type</th>
-                        <th>Genres</th>
+
 
 
                     </tr>

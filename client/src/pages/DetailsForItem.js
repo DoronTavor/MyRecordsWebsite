@@ -170,7 +170,7 @@ function DetailsForItem(){
             <ControlButton onClick={onClickButton}>   {isRecommend ? "Recommend Record" : 'Unrecommend Record'} </ControlButton>
             <Title name={musicObject.Name.split('=')[0]} artist={musicObject.Artist}
                    year={musicObject.Year} format={musicObject.Format} label={musicObject.label} country={musicObject.country} type={musicObject.type}
-                   genres={musicObject.genres}/>
+                  />
             <TrackList TrackList={jsonToArrayWithoutKeys(musicObject.TrackList)}></TrackList>
             <PrimaryButton data-link={musicObject.uri} onClick={handleClickMoreDetails}>  Explore more on Discogs</PrimaryButton>
 

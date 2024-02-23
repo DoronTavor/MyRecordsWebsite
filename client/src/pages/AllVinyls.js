@@ -138,7 +138,7 @@ function AllVinyls(){
                         <th>Artist</th>
                         <th>Format</th>
                         <th>Type</th>
-                        <th>Genres</th>
+
 
 
                     </tr>
@@ -160,7 +160,7 @@ function AllVinyls(){
                             {/*<td><h3 style={{ textAlign: 'center' }}> {card.Artist.split('=')[0]}</h3> </td>*/}
                             <td><h3 style={{ textAlign: 'center' }}> {card.Format}</h3> </td>
                             <td><h3 style={{ textAlign: 'center' }}> {card.type}</h3> </td>
-                            <td><h3 style={{ textAlign: 'center' }}> {card.genres}</h3> </td>
+
                             <td>
                                 <Link to={`/Details/${card._id}`}>More Details</Link>
                             </td>
