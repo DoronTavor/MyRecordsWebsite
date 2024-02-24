@@ -20,6 +20,7 @@ import HelperFunctions, {returnOnlyHebrew} from "../helpers/HelperFunctions"
 import {Link, useParams} from "react-router-dom";
 import * as url from "url";
 import {DOMAIN} from "../constants";
+import gifImage from "../images/record.gif";
 const StyledHeader = styled(Header)`
   ${tw`justify-between`}
   ${LogoLink} {
@@ -114,7 +115,11 @@ function AllCds(){
 
 
     if(!musicObjects) {
-        return <div>Loading...</div>
+        return <div>
+            <div>Loading...</div>
+            <img src={gifImage} alt="GIF" />
+        </div>
+
     }
     let navLinks = [
         <NavLinks key={1}>

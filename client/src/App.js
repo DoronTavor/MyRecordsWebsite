@@ -31,17 +31,17 @@ import Hero from "components/hero/TwoColumnWithVideo.js";
 // import Hero from "components/hero/BackgroundAsImage.js";
 // import Hero from "components/hero/BackgroundAsImageWithCenteredContent.js";
 
- import Features from "components/features/ThreeColSimple.js";
+// import Features from "components/features/ThreeColSimple.js";
 // import Features from "components/features/ThreeColWithSideImage.js";
 // import Features from "components/features/ThreeColWithSideImageWithPrimaryBackground.js";
 // import Features from "components/features/VerticalWithAlternateImageAndText.js";
 // import Features from "components/features/DashedBorderSixFeatures";
- import MainFeature from "components/features/TwoColWithButton.js";
+ //import MainFeature from "components/features/TwoColWithButton.js";
 // import MainFeature from "components/features/TwoColSingleFeatureWithStats.js";
- import MainFeature2 from "components/features/TwoColSingleFeatureWithStats2.js";
+ //import MainFeature2 from "components/features/TwoColSingleFeatureWithStats2.js";
 // import MainFeature from "components/features/TwoColWithTwoHorizontalFeaturesAndButton.js";
- import FeatureWithSteps from "components/features/TwoColWithSteps.js";
- import FeatureStats from "components/features/ThreeColCenteredStatsPrimaryBackground.js";
+ //import FeatureWithSteps from "components/features/TwoColWithSteps.js";
+ //import FeatureStats from "components/features/ThreeColCenteredStatsPrimaryBackground.js";
 
 // import Pricing from "components/pricing/ThreePlans.js";
 // import Pricing from "components/pricing/ThreePlansWithHalfPrimaryBackground.js";
@@ -100,11 +100,11 @@ import Hero from "components/hero/TwoColumnWithVideo.js";
 // import TermsOfServicePage from "pages/TermsOfService.js";
 // import PrivacyPolicyPage from "pages/PrivacyPolicy.js";
 
-import ComponentRenderer from "ComponentRenderer.js";
-import MainLandingPage from "MainLandingPage.js";
-import ThankYouPage from "ThankYouPage.js";
+//import ComponentRenderer from "ComponentRenderer.js";
+//import MainLandingPage from "MainLandingPage.js";
+//import ThankYouPage from "ThankYouPage.js";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+//import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // export default function App() {
 //   // If you want to disable the animation just use the disabled `prop` like below on your page's component

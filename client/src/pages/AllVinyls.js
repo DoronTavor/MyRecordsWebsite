@@ -18,6 +18,7 @@ import Header, { LogoLink, NavLinks, NavLink as NavLinkBase } from "../component
 import MusicAlbum from "../Models/AlbumModel";
 import HelperFunctions, {returnOnlyHebrew} from "../helpers/HelperFunctions"
 import {Link, useParams} from "react-router-dom";
+import gifImage from "../images/record.gif";
 import * as url from "url";
 import {DOMAIN} from "../constants";
 const StyledHeader = styled(Header)`
@@ -113,7 +114,11 @@ function AllVinyls(){
 
 
     if(!musicObjects) {
-        return <div>Loading...</div>
+        return <div>
+            <div>Loading...</div>
+            <img src={gifImage} alt="GIF" />
+        </div>
+
     }
     let navLinks = [
         <NavLinks key={1}>
