@@ -11,7 +11,7 @@ import Header, { LogoLink, NavLinks, NavLink as NavLinkBase } from "../component
 import {useParams} from "react-router-dom";
 import EllipseButton from "../styles/EllipseButton";
 import {DOMAIN} from "../constants";
-import gifImage from "../images/record.gif";
+import gifImage from "../images/output.gif";
 
 const StyledHeader = styled(Header)`
   ${tw`justify-between`}
@@ -151,13 +151,16 @@ function DetailsForItem(){
      }
 
 
-    if(!musicObject) {
-        return <div>
-            <div>Loading...</div>
-            <img src={gifImage} alt="GIF" />
-        </div>
-
+    if (!musicObject) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <div style={{ fontSize: '36px', marginRight: '20px' }}>Loading...</div>
+                <img src={gifImage} alt="GIF" style={{ display: 'block', width: '100px', height: '100px' }} />
+            </div>
+        );
     }
+
+
     let navLinks = [
         <NavLinks key={1}>
             <NavLink to="/allCds">CDs</NavLink>
