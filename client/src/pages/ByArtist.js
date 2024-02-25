@@ -113,12 +113,13 @@ function ByArtist(){
 
 
 
-    if(!musicObjects) {
-        return <div>
-            <div>Loading...</div>
-            <img src={gifImage} alt="GIF" />
-        </div>
-
+    if (!musicObjects) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <div style={{ fontSize: '36px', marginRight: '20px' }}>Loading...</div>
+                <img src={gifImage} alt="GIF" style={{ display: 'block', width: '100px', height: '100px' }} />
+            </div>
+        );
     }
     let navLinks = [
         <NavLinks key={1}>
@@ -133,7 +134,7 @@ function ByArtist(){
             <StyledHeader links={navLinks} collapseBreakpointClass="sm" />
         <Container>
             <Content>
-                <Heading>Discography</Heading>
+                <Heading>Discography- {artist}</Heading>
                 <table>
                     <thead>
                     <tr>

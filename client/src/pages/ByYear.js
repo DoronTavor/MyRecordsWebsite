@@ -136,7 +136,7 @@ function ByYear(){
             <StyledHeader links={navLinks} collapseBreakpointClass="sm" />
         <Container>
             <Content>
-                <Heading>Discography</Heading>
+                <Heading>Discography- {year}</Heading>
                 <table>
                     <thead>
                     <tr>
