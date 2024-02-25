@@ -20,7 +20,7 @@ import HelperFunctions, {returnOnlyHebrew} from "../helpers/HelperFunctions"
 import {Link, useParams} from "react-router-dom";
 import * as url from "url";
 import {DOMAIN} from "../constants";
-import gifImage from "../images/record.gif";
+import gifImage from "../images/output.gif";
 const StyledHeader = styled(Header)`
   ${tw`justify-between`}
   ${LogoLink} {

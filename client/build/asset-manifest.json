@@ -1,9 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.1d68c4bc.css",
-    "main.js": "/static/js/main.6b6c8ee3.js",
+    "main.js": "/static/js/main.41d7bdf1.js",
     "static/media/output.gif": "/static/media/output.11cb4e35b92db00d7b26.gif",
-    "static/media/record.gif": "/static/media/record.46f44958a70c1f6fc7af.gif",
     "static/media/newyellowlogorem.png": "/static/media/newyellowlogorem.bb47b6658b38e75ab4dc.png",
     "static/media/myrecordspic.jpg": "/static/media/myrecordspic.6db4d38d4be254ff85fd.jpg",
     "static/media/ragingsouls.jpg": "/static/media/ragingsouls.b11c4c96f46500830080.jpg",
@@ -28,10 +27,10 @@
     "static/media/chevron-right.svg": "/static/media/chevron-right.d45fd2f46e93f5c3aa0a7d0617d9fecf.svg",
     "static/media/facebook-icon.svg": "/static/media/facebook-icon.cc908d417a340b8c3cf0a564cab79da0.svg",
     "main.1d68c4bc.css.map": "/static/css/main.1d68c4bc.css.map",
-    "main.6b6c8ee3.js.map": "/static/js/main.6b6c8ee3.js.map"
+    "main.41d7bdf1.js.map": "/static/js/main.41d7bdf1.js.map"
   },
   "entrypoints": [
     "static/css/main.1d68c4bc.css",
-    "static/js/main.6b6c8ee3.js"
+    "static/js/main.41d7bdf1.js"
   ]
 }
